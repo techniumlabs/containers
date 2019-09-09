@@ -8,6 +8,8 @@ WORKING_DIR   := $(shell pwd)
 alpine:: ## Build alpine image
 	$(MAKE) -C alpine ENVFILE=$(PWD)/config
 
+php:: ## Build php image
+	$(MAKE) -C php ENVFILE=$(PWD)/config
 
 # A help target including self-documenting targets (see the awk statement)
 help: ## This help target

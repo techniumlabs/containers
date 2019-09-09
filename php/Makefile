@@ -3,9 +3,9 @@ WORKING_DIR   := $(shell pwd)
 
 include ${ENVFILE}
 
-IMAGE_NAME       = base
-IMAGE_VERSION    = alpine-3.10.2
-BRANCH	:=$(shell git rev-parse --abbrev-ref HEAD)
+IMAGE_NAME       = php
+IMAGE_VERSION    = 7.2-fpm-alpine-3.10.2
+BRANCH 	:=$(shell git rev-parse --abbrev-ref HEAD)
 ifeq ($(BRANCH),master)
 	# If the branch is 'master'.
 	BUILD_SUFFIX =
@@ -13,6 +13,7 @@ else
 	# Else set the image version to 'latest' and use the 'snapshots' prefix in S3.
 	BUILD_SUFFIX     = -dev-$(shell git log -1 --pretty=format:"%H")
 endif
+
 IMAGE_TAG        = $(IMAGE_REGISTRY)/$(IMAGE_REPOSITORY)/$(IMAGE_NAME):$(IMAGE_VERSION)$(BUILD_SUFFIX)
 
 .DEFAULT_GOAL := release
@@ -24,8 +25,8 @@ push:: ## Push the docker image
 
 build: lint ## Build the docker image
 	@docker build --pull -t $(IMAGE_TAG) \
-		--build-arg MAINTAINER=${MAINTAINER} \
-		--build-arg TIMEZONE=${TIMEZONE} \
+		--build-arg IMAGE_REGISTRY=${IMAGE_REGISTRY} \
+		--build-arg IMAGE_REPOSITORY=${IMAGE_REPOSITORY} \
 		$(WORKING_DIR)
 
 release: build push
