@@ -1,0 +1,4 @@
+IMAGE_REGISTRY=quay.io
+IMAGE_REPOSITORY=ramz.sivagurunathan
+MAINTAINER=devops@techniumlabs.com.au
+TIMEZONE=Australia/Sydney
