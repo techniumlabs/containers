@@ -1,15 +1,28 @@
 SHELL					:= /bin/bash
 WORKING_DIR   := $(shell pwd)
+REGISTRY_USER :=
+REGISTRY_PASS :=
 
-.DEFAULT_GOAL := build
+include config
 
-.PHONY: build
+.DEFAULT_GOAL := help
 
-alpine:: ## Build alpine image
-	$(MAKE) -C alpine ENVFILE=$(PWD)/config
+.PHONY: login
 
-php:: ## Build php image
-	$(MAKE) -C php ENVFILE=$(PWD)/config
+login:: ## Login to docker Registry
+	@docker login -u $(REGISTRY_USER) -p $(REGISTRY_PASS) $(IMAGE_REGISTRY)
+
+lint-%:: ## Lint image
+	$(MAKE) -C $* ENVFILE=$(PWD)/config lint
+
+build-%:: ## Build image
+	$(MAKE) -C $* ENVFILE=$(PWD)/config build
+
+release-%:: login ## Release image
+	$(MAKE) -C $* ENVFILE=$(PWD)/config release
+
+help-%:: ## Release image
+	$(MAKE) -C $* ENVFILE=$(PWD)/config help
 
 # A help target including self-documenting targets (see the awk statement)
 help: ## This help target

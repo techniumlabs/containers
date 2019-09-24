@@ -1,7 +1,7 @@
 SHELL						 := /bin/bash
 WORKING_DIR      := $(shell pwd)
-IMAGE_NAME       := base
-IMAGE_VERSION    := alpine-3.10.2-r0
+IMAGE_NAME       := php-fpm
+IMAGE_VERSION    := 7.2-alpine-3.10.2-r0
 BRANCH					 :=$(shell git rev-parse --abbrev-ref HEAD)
 
 include ${ENVFILE}
@@ -40,9 +40,9 @@ push:: ## Push the docker image
 
 build: lint ## Build the docker image
 	@docker build --pull -t $(IMAGE_TAG) \
-		--build-arg MAINTAINER=${MAINTAINER} \
-		--build-arg TIMEZONE=${TIMEZONE} \
-		$(WORKING_DIR)
+	--build-arg IMAGE_REGISTRY=${IMAGE_REGISTRY} \
+	--build-arg IMAGE_REPOSITORY=${IMAGE_REPOSITORY} \
+	$(WORKING_DIR)
 
 # A help target including self-documenting targets (see the awk statement)
 help: ## This help target
