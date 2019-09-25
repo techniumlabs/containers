@@ -214,4 +214,7 @@ STOPSIGNAL SIGQUIT
 
 ENTRYPOINT ["docker-php-entrypoint"]
 EXPOSE 9000
+
+USER www-data
+
 CMD ["php-fpm"]
