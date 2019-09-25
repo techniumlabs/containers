@@ -1,11 +1,11 @@
-SHELL					:= /bin/bash
-WORKING_DIR   := $(shell pwd)
+SHELL						 := /bin/bash
+WORKING_DIR      := $(shell pwd)
+IMAGE_NAME       := apache
+IMAGE_VERSION    := 2.4.41-alpine-3.10.2-r0
+BRANCH					 :=$(shell git rev-parse --abbrev-ref HEAD)
 
 include ${ENVFILE}
 
-IMAGE_NAME       = apache
-IMAGE_VERSION    = alpine-3.10.2
-BRANCH	:=$(shell git rev-parse --abbrev-ref HEAD)
 ifeq ($(BRANCH),master)
 	# If the branch is 'master'.
 	BUILD_SUFFIX =
@@ -14,25 +14,35 @@ else
 	BUILD_SUFFIX     = -dev-$(shell git log -1 --pretty=format:"%H")
 endif
 
-IMAGE_TAG        = $(IMAGE_REGISTRY)/$(IMAGE_REPOSITORY)/$(IMAGE_NAME):$(IMAGE_VERSION)$(BUILD_SUFFIX)
+check_defined = \
+		$(strip $(foreach 1,$1, \
+				$(call __check_defined,$1,$(strip $(value 2)))))
+__check_defined = \
+		$(if $(value $1),, \
+			$(error Undefined $1$(if $2, ($2))))
+
+$(call check_defined, IMAGE_REGISTRY, Registry url)
+$(call check_defined, IMAGE_REPOSITORY, Repository name)
+
+IMAGE_TAG = $(IMAGE_REGISTRY)/$(IMAGE_REPOSITORY)/$(IMAGE_NAME):$(IMAGE_VERSION)$(BUILD_SUFFIX)
 
 .DEFAULT_GOAL := release
 
 .PHONY: lint build push
+
+release: build push
+
+lint:: ## Lint dockerfile for best practices
+	@hadolint Dockerfile
 
 push:: ## Push the docker image
 	@docker push $(IMAGE_TAG)
 
 build: lint ## Build the docker image
 	@docker build --pull -t $(IMAGE_TAG) \
-		--build-arg IMAGE_REGISTRY=${IMAGE_REGISTRY} \
-		--build-arg IMAGE_REPOSITORY=${IMAGE_REPOSITORY} \
-		$(WORKING_DIR)
-
-release: build push
-
-lint:: ## Lint dockerfile for best practices
-	@hadolint Dockerfile
+	--build-arg IMAGE_REGISTRY=${IMAGE_REGISTRY} \
+	--build-arg IMAGE_REPOSITORY=${IMAGE_REPOSITORY} \
+	$(WORKING_DIR)
 
 # A help target including self-documenting targets (see the awk statement)
 help: ## This help target
