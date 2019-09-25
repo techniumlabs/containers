@@ -55,12 +55,18 @@ RUN chmod +x /usr/local/bin/httpd-foreground \
       /etc/apache2/conf.d/ssl.conf \
   /etc/apache2/conf.d/proxy.conf \
   && sed -i -e '1h;2,$H;$!d;g' -e 's/<VirtualHost.*<\/VirtualHost>/#-> removed vhost/g' /etc/apache2/conf.d/ssl.conf \
-  && chown -R root:root /etc/apache2/conf.d/custom/ssl \
+  && sed -i 's/Listen 80/Listen 8080/g' /etc/apache2/httpd.conf \
+  && sed -i 's/Listen 443/Listen 8443/g' /etc/apache2/conf.d/ssl.conf \
+  && chown -R apache:apache /etc/apache2 \
+  && chown -R apache:apache /etc/apache2/conf.d/custom \
+  && chown -R apache:apache /etc/apache2/conf.d/custom/ssl \
   && find /etc/apache2/conf.d/custom/ssl -type d -exec chmod 750 {} \; \
   && find /etc/apache2/conf.d/custom/ssl -type f -exec chmod 640 {} \; \
   && mv /etc/apache2/conf.d/custom/main.conf /etc/apache2/conf.d/zzz-custom.conf \
   && mkdir -p -- "/var/run/apache2" \
   && mkdir -p -- "/run/apache2" \
+  && chown -R apache:apache /run/apache2 \
+  && chown -R apache:apache /var/run/apache2 \
   && go-replace --regex --regex-backrefs \
   -s '^[\s]*(CustomLog|ErrorLog|TransferLog) ([^\s]+)(.*)' -r '$1 /proc/self/fd/1 $3' \
   -s '^[\s]*(ErrorLog) ([^\s]+)(.*)' -r '$1 /proc/self/fd/2 $3' \
@@ -68,4 +74,5 @@ RUN chmod +x /usr/local/bin/httpd-foreground \
   --path-regex='(.*\.conf|default.*|.*log)$'
 
 CMD ["httpd-foreground"]
-EXPOSE 80 443
+USER apache
+EXPOSE 8080 8443
