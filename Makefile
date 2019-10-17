@@ -1,15 +1,24 @@
 SHELL					:= /bin/bash
 WORKING_DIR   := $(shell pwd)
-REGISTRY_USER :=
-REGISTRY_PASS :=
+REGISTRY_USER ?=
+REGISTRY_PASS ?=
 
 include config
 
 .DEFAULT_GOAL := help
 
+check_defined = \
+		$(strip $(foreach 1,$1, \
+				$(call __check_defined,$1,$(strip $(value 2)))))
+__check_defined = \
+		$(if $(value $1),, \
+			$(error Undefined $1$(if $2, ($2))))
+
 .PHONY: login
 
 login:: ## Login to docker Registry
+	$(call check_defined, REGISTRY_USER, Registry User)
+	$(call check_defined, REGISTRY_PASS, Registry password)
 	@docker login -u $(REGISTRY_USER) -p $(REGISTRY_PASS) $(IMAGE_REGISTRY)
 
 lint-%:: ## Lint image
