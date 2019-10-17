@@ -24,7 +24,11 @@ __check_defined = \
 $(call check_defined, IMAGE_REGISTRY, Registry url)
 $(call check_defined, IMAGE_REPOSITORY, Repository name)
 
-IMAGE_TAG = $(IMAGE_REGISTRY)/$(IMAGE_REPOSITORY)/$(IMAGE_NAME):$(IMAGE_VERSION)$(BUILD_SUFFIX)
+ifeq ($(IMAGE_REGISTRY),hub.docker.com)
+	IMAGE_TAG = $(IMAGE_REPOSITORY)/$(IMAGE_NAME):$(IMAGE_VERSION)$(BUILD_SUFFIX)
+else
+	IMAGE_TAG = $(IMAGE_REGISTRY)/$(IMAGE_REPOSITORY)/$(IMAGE_NAME):$(IMAGE_VERSION)$(BUILD_SUFFIX)
+endif
 
 .DEFAULT_GOAL := release
 
