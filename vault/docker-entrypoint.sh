@@ -23,10 +23,11 @@ get_addr () {
       exit}'
 }
 
+mkdir -p /etc/vault/tls
 # Fetch tls certs from aws secret manager and place it at relevant location
-aws secretsmanager get-secret-value --secret-id ${VAULT_AWS_SECRET_MANAGER_NAME:-"vault-tls-cert"} | jq -r -c '.SecretString | fromjson | ."ca.crt"' | base64 -D > /etc/vault/tls/ca.crt
-aws secretsmanager get-secret-value --secret-id ${VAULT_AWS_SECRET_MANAGER_NAME:-"vault-tls-cert"} | jq -r -c '.SecretString | fromjson | ."vault.pem"' | base64 -D > /etc/vault/tls/vault.pem
-aws secretsmanager get-secret-value --secret-id ${VAULT_AWS_SECRET_MANAGER_NAME:-"vault-tls-cert"} | jq -r -c '.SecretString | fromjson | ."vault.key"' | base64 -D > /etc/vault/tls/vault.key
+aws secretsmanager get-secret-value --secret-id ${VAULT_AWS_SECRET_MANAGER_NAME:-"vault-tls-cert"} | jq -r -c '.SecretString | fromjson | ."ca.crt"' | base64 -d > /etc/vault/tls/ca.crt
+aws secretsmanager get-secret-value --secret-id ${VAULT_AWS_SECRET_MANAGER_NAME:-"vault-tls-cert"} | jq -r -c '.SecretString | fromjson | ."vault.pem"' | base64 -d > /etc/vault/tls/vault.crt
+aws secretsmanager get-secret-value --secret-id ${VAULT_AWS_SECRET_MANAGER_NAME:-"vault-tls-cert"} | jq -r -c '.SecretString | fromjson | ."vault.key"' | base64 -d > /etc/vault/tls/vault.key
 
 if [ -n "$VAULT_REDIRECT_INTERFACE" ]; then
     export VAULT_REDIRECT_ADDR=$(get_addr $VAULT_REDIRECT_INTERFACE ${VAULT_REDIRECT_ADDR:-"http://0.0.0.0:8200"})

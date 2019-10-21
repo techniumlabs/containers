@@ -21,8 +21,9 @@ RUN set -eux; \
   libcap=2.27-r0 \
   su-exec=0.2-r0 \
   dumb-init=1.2.2-r1 \
+  jq=1.6-r0 \
   tzdata=2019b-r0 && \
-    pip3 install awscli==1.16.170 && \
+    pip3 install awscli==1.16.232 && \
     apkArch="$(apk --print-arch)"; \
     case "$apkArch" in \
         armhf) ARCH='arm' ;; \
@@ -86,7 +87,7 @@ EXPOSE 8200
 # capability so that Vault can mlock memory.
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 # By default you'll get a single-node development server that stores everything
 # in RAM and bootstraps itself. Don't use this configuration for production.
