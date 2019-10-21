@@ -1,4 +1,4 @@
-IMAGE_REGISTRY=quay.io
-IMAGE_REPOSITORY=ramz.sivagurunathan
+IMAGE_REGISTRY=hub.docker.com
+IMAGE_REPOSITORY=techniumlabs
 MAINTAINER=devops@techniumlabs.com.au
 TIMEZONE=Australia/Sydney
