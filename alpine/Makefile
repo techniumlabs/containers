@@ -1,8 +1,10 @@
-SHELL						 := /bin/bash
-WORKING_DIR      := $(shell pwd)
-IMAGE_NAME       := base
-IMAGE_VERSION    := alpine-3.10.2-r0
-BRANCH					 :=$(shell git rev-parse --abbrev-ref HEAD)
+SHELL                := /bin/bash
+WORKING_DIR          := $(shell pwd)
+IMAGE_NAME           := base
+IMAGE_REVISION       ?= 0
+IMAGE_VERSION        ?= alpine-3.10.2-r$(IMAGE_REVISION)
+BRANCH               ?= $(shell git rev-parse --abbrev-ref HEAD)
+CONTAINER_BUILDER    ?= docker
 
 include ${ENVFILE}
 
@@ -24,11 +26,7 @@ __check_defined = \
 $(call check_defined, IMAGE_REGISTRY, Registry url)
 $(call check_defined, IMAGE_REPOSITORY, Repository name)
 
-ifeq ($(IMAGE_REGISTRY),hub.docker.com)
-	IMAGE_TAG = $(IMAGE_REPOSITORY)/$(IMAGE_NAME):$(IMAGE_VERSION)$(BUILD_SUFFIX)
-else
-	IMAGE_TAG = $(IMAGE_REGISTRY)/$(IMAGE_REPOSITORY)/$(IMAGE_NAME):$(IMAGE_VERSION)$(BUILD_SUFFIX)
-endif
+IMAGE_TAG = $(IMAGE_REGISTRY)/$(IMAGE_REPOSITORY)/$(IMAGE_NAME):$(IMAGE_VERSION)$(BUILD_SUFFIX)
 
 .DEFAULT_GOAL := release
 
@@ -40,10 +38,10 @@ lint:: ## Lint dockerfile for best practices
 	@hadolint Dockerfile
 
 push:: ## Push the docker image
-	@docker push $(IMAGE_TAG)
+	@$(CONTAINER_BUILDER) push $(IMAGE_TAG)
 
 build: lint ## Build the docker image
-	@docker build --pull -t $(IMAGE_TAG) \
+	@$(CONTAINER_BUILDER) build -t $(IMAGE_TAG) \
 		--build-arg MAINTAINER=${MAINTAINER} \
 		--build-arg TIMEZONE=${TIMEZONE} \
 		$(WORKING_DIR)

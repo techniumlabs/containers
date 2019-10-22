@@ -15,4 +15,5 @@ if [[ -z "$WEB_PHP_SOCKET" ]]; then
     ## WEB_PHP_SOCKET is not set, remove PHP files
     rm -f -- /etc/apache2/conf.d/custom/conf.d/10-php.conf
 fi
+
 exec httpd -DFOREGROUND "$@"

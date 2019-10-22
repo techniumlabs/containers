@@ -1,7 +1,8 @@
-SHELL					:= /bin/bash
-WORKING_DIR   := $(shell pwd)
-REGISTRY_USER ?=
-REGISTRY_PASS ?=
+SHELL							:= /bin/bash
+WORKING_DIR				:= $(shell pwd)
+REGISTRY_USER			?=
+REGISTRY_PASS			?=
+CONTAINER_BUILDER	:= docker
 
 include config
 
@@ -19,16 +20,16 @@ __check_defined = \
 login:: ## Login to docker Registry
 	$(call check_defined, REGISTRY_USER, Registry User)
 	$(call check_defined, REGISTRY_PASS, Registry password)
-	@docker login -u $(REGISTRY_USER) -p $(REGISTRY_PASS) $(IMAGE_REGISTRY)
+	@$(CONTAINER_BUILDER) login -u $(REGISTRY_USER) -p $(REGISTRY_PASS) $(IMAGE_REGISTRY)
 
 lint-%:: ## Lint image
-	$(MAKE) -C $* ENVFILE=$(PWD)/config lint
+	$(MAKE) -C $* ENVFILE=$(PWD)/config lint CONTAINER_BUILDER=$(CONTAINER_BUILDER)
 
 build-%:: ## Build image
-	$(MAKE) -C $* ENVFILE=$(PWD)/config build
+	$(MAKE) -C $* ENVFILE=$(PWD)/config build CONTAINER_BUILDER=$(CONTAINER_BUILDER)
 
 release-%:: login ## Release image
-	$(MAKE) -C $* ENVFILE=$(PWD)/config release
+	$(MAKE) -C $* ENVFILE=$(PWD)/config release CONTAINER_BUILDER=$(CONTAINER_BUILDER)
 
 help-%:: ## Release image
 	$(MAKE) -C $* ENVFILE=$(PWD)/config help
