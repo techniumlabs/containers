@@ -48,7 +48,7 @@ build: lint ## Build the docker image
 
 # A help target including self-documenting targets (see the awk statement)
 help: ## This help target
-	@echo "Build Alpine Docker Image"
+	@echo "Build Alpine container Image"
 	@echo "$$HELP_TEXT"
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / \
 	{printf "\033[36m%-30s\033[0m  %s\n", $$1, $$2}' $(MAKEFILE_LIST)
