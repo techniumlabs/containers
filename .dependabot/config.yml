@@ -1,0 +1,8 @@
+version: 1
+update_configs:
+  - package_manager: "docker"
+    directory: "/alpine/3.10"
+    update_schedule: "daily"
+  - package_manager: "docker"
+    directory: "/alpine/3.11"
+    update_schedule: "daily"
