@@ -5,17 +5,15 @@ on:
     # Publish `master` as Docker `latest` image.
     branches:
       - master
-
+    paths:
+      - 'alpine/3.11/**'
     # Publish `v1.2.3` tags as releases.
     tags:
       - v*
 
-  # Run tests for any PRs.
-  pull_request:
-
 env:
   IMAGE_NAME: base
-  IMAGE_VERSION: 3.11-alpine-${{github.run_number}}
+  IMAGE_VERSION: 3.11-alpine-r${{github.run_number}}
 
 jobs:
 
