@@ -14,4 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build alpine/3.10 --file Dockerfile --tag base:alpine-3.10-$GITHUB_RUN_NUMBER
+      run: docker build alpine/3.10 --file Dockerfile --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag base:alpine-3.10-${GITHUB_RUN_NUMBER}
+      env:
+        MAINTAINER: devops@techniumlabs.com
+        TIMEZONE: Australia/Sydney
