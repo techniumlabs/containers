@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build --file Dockerfile --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag base:alpine-3.10-${GITHUB_RUN_NUMBER} alpine/3.10
+      run: docker build --file alpine/3.10/Dockerfile --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag base:alpine-3.10-${GITHUB_RUN_NUMBER} alpine/3.10
       env:
         MAINTAINER: devops@techniumlabs.com
         TIMEZONE: Australia/Sydney
