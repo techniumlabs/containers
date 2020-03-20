@@ -1,4 +1,4 @@
-name: Docker
+name: Alpine 3.11 Image
 
 on:
   push:
