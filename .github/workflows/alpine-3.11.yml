@@ -30,6 +30,9 @@ jobs:
 
       - name: Build image
         run: docker build --file alpine/3.11/Dockerfile --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag base:alpine-3.11-${GITHUB_RUN_NUMBER} alpine/3.11
+        env:
+          MAINTAINER: devops@techniumlabs.com
+          TIMEZONE: Australia/Sydney
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
