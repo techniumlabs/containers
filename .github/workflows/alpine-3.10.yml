@@ -2,17 +2,45 @@ name: Alpine 3.10 Image
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    # Publish `master` as Docker `latest` image.
+    branches:
+      - master
+    paths:
+      - 'alpine/3.10/**'
+    # Publish `v1.2.3` tags as releases.
+    tags:
+      - v*
+
+env:
+  IMAGE_NAME: base
+  IMAGE_VERSION: 3.10-alpine-r${{github.run_number}}
 
 jobs:
-  build:
+
+  # Push image to GitHub Packages.
+  # See also https://docs.docker.com/docker-hub/builds/
+  push:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build --file alpine/3.10/Dockerfile --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag base:alpine-3.10-${GITHUB_RUN_NUMBER} alpine/3.10
-      env:
-        MAINTAINER: devops@techniumlabs.com
-        TIMEZONE: Australia/Sydney
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        run: docker build --file alpine/3.10/Dockerfile --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image alpine/3.10
+        env:
+          MAINTAINER: devops@techniumlabs.com
+          TIMEZONE: Australia/Sydney
+
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Push image
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo IMAGE_VERSION=$IMAGE_VERSION
+
+          docker tag image $IMAGE_ID:$IMAGE_VERSION
+          docker push $IMAGE_ID:$IMAGE_VERSION
