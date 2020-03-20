@@ -3,10 +3,8 @@ name: Alpine 3.10 Image
 on:
   push:
     branches: [ master ]
-    paths: alpine/3.10
   pull_request:
     branches: [ master ]
-    paths: alpine/3.10
     
 jobs:
   build:
