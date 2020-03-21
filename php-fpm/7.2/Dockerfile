@@ -43,7 +43,7 @@ RUN apk add --no-cache \
   curl=7.66.0-r0 \
   tar=1.32-r0 \
   xz=5.2.4-r0 \
-  openssl=1.1.1d-r0
+  openssl=1.1.1d-r2
 
 # ensure www-data user exists
 RUN set -eux; \
