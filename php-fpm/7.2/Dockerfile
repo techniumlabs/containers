@@ -60,7 +60,7 @@ RUN set -eux; \
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 # hadolint ignore=DL3003
 RUN set -eux; \
-  apk add --no-cache --virtual .fetch-deps gnupg=2.2.19-r1; \
+  apk add --no-cache --virtual .fetch-deps gnupg=2.2.19-r0; \
   \
   mkdir -p /usr/src; \
   cd /usr/src; \
