@@ -27,7 +27,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build image
-        run: docker build --file alpine/3.10/Dockerfile --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image alpine/3.10
+        run: docker build --file alpine/3.10/Dockerfile \
+            --label "org.opencontainers.image.source=https://github.com/techniumlabs/containers/alpine/3.10" \
+            --label "org.opencontainers.image.revision=${{github.sha}}" \
+            --label "org.opencontainers.image.vendor=techniumlabs" \
+            --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image alpine/3.10
+             
         env:
           MAINTAINER: devops@techniumlabs.com
           TIMEZONE: Australia/Sydney
