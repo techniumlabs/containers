@@ -98,9 +98,9 @@ RUN set -eux; \
   curl-dev=7.66.0-r0 \
   libedit-dev=20190324.3.1-r0 \
   libsodium-dev=1.0.18-r0 \
-  libxml2-dev=2.9.9-r2 \
-  openssl-dev=1.1.1d-r0 \
-  sqlite-dev=3.28.0-r1 \
+  libxml2-dev=2.9.9-r3 \
+  openssl-dev=1.1.1d-r2 \
+  sqlite-dev=3.28.0-r2 \
   ; \
   \
   export CFLAGS="$PHP_CFLAGS" \
