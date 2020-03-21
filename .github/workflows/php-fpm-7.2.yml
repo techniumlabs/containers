@@ -15,6 +15,8 @@ on:
 env:
   IMAGE_NAME: php-fpm
   IMAGE_VERSION: 7.2-alpine-r${{github.run_number}}
+  IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
+  IMAGE_REPOSITORY: containers
 
 jobs:
 
@@ -32,6 +34,8 @@ jobs:
             --label "org.opencontainers.image.source=https://github.com/techniumlabs/containers/php-fpm/7.2"
             --label "org.opencontainers.image.revision=${{github.sha}}"
             --label "org.opencontainers.image.vendor=techniumlabs"
+            --build-arg IMAGE_REGISTRY=${IMAGE_REGISTRY}
+            --build-arg IMAGE_REPOSITORY=${IMAGE_REPOSITORY}
             --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image php-fpm/7.2
 
         env:
