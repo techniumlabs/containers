@@ -32,7 +32,7 @@ ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 ENV GPG_KEYS 5A52880781F755608BF815FC910DEB46F53EA312 42670A7FE4D0441C8E4632349E4FDC074A4EF02D
 
 ENV PHP_VERSION 7.4.4
-ENV PHP_URL="https://www.php.net/get/php-7.4.4.tar.xz/from/this/mirror" PHP_ASC_URL="https://www.php.net/get/php-7.4.4.tar.xz.asc/from/this/mirror"
+ENV PHP_URL="https://www.php.net/distributions/php-7.4.4.tar.xz" PHP_ASC_URL="https://www.php.net/distributions/php-7.4.4.tar.xz.asc"
 ENV PHP_SHA256="1873c4cefdd3df9a78dcffb2198bba5c2f0464f55c9c960720c84df483fca74c" PHP_MD5=""
 
 COPY docker-php-* /usr/local/bin/
