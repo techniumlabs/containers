@@ -29,7 +29,7 @@ ENV PHP_CFLAGS="-fstack-protector-strong -fpic -fpie -O2"
 ENV PHP_CPPFLAGS="$PHP_CFLAGS"
 ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
-ENV GPG_KEYS 1729F83938DA44E27BA0F4D3DBDB397470D12172 B1B44D8F021E4E2D6021E995DC9FF8D3EE5AF27F
+ENV GPG_KEYS 5A52880781F755608BF815FC910DEB46F53EA312 42670A7FE4D0441C8E4632349E4FDC074A4EF02D
 
 ENV PHP_VERSION 7.4.4
 ENV PHP_URL="https://www.php.net/get/php-7.4.4.tar.xz/from/this/mirror" PHP_ASC_URL="https://www.php.net/get/php-7.4.4.tar.xz.asc/from/this/mirror"
@@ -65,7 +65,7 @@ RUN set -eux; \
   mkdir -p /usr/src; \
   cd /usr/src; \
   \
-  curl -fsSL -o php.tar.xz "$PHP_URL"; \
+  curl -fSL --retry 5 -o php.tar.xz "$PHP_URL"; \
   \
   if [ -n "$PHP_SHA256" ]; then \
     echo "$PHP_SHA256 *php.tar.xz" | sha256sum -c -; \
@@ -75,7 +75,7 @@ RUN set -eux; \
   fi; \
   \
   if [ -n "$PHP_ASC_URL" ]; then \
-    curl -fsSL -o php.tar.xz.asc "$PHP_ASC_URL"; \
+    curl -fSL --retry 5 -o php.tar.xz.asc "$PHP_ASC_URL"; \
     GNUPGHOME="$(mktemp -d)"; \
     export GNUPGHOME; \
     for key in $GPG_KEYS; do \
