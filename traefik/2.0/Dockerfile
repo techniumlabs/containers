@@ -2,7 +2,7 @@ ARG  IMAGE_REGISTRY
 ARG  IMAGE_REPOSITORY
 FROM ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}/base:3.10-alpine-r10
 
-ARG TRAEFIK_VERSION="2.0.4"
+ARG TRAEFIK_VERSION="2.0.7"
 
 RUN addgroup -g 1000 traefik && \
   adduser -S -G traefik -u 1000 traefik
