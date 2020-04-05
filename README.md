@@ -26,3 +26,7 @@ version 7.4: ![PHP FPM 7.4 Image](https://github.com/techniumlabs/containers/wor
 
 ### Traefik
 version 2.0: ![Traefik 2.0 Image](https://github.com/techniumlabs/containers/workflows/Traefik%202.0%20Image/badge.svg)
+
+version 2.1: ![Traefik 2.1 Image](https://github.com/techniumlabs/containers/workflows/Traefik%202.1%20Image/badge.svg)
+
+version 2.2: ![Traefik 2.2 Image](https://github.com/techniumlabs/containers/workflows/Traefik%202.2%20Image/badge.svg)
