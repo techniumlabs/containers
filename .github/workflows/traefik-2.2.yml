@@ -1,0 +1,56 @@
+name: Traefik 2.2 Image
+
+on:
+  push:
+    # Publish `master` as Docker `latest` image.
+    branches:
+      - master
+    paths:
+      - 'traefik/2.2/**'
+      - '.github/workflows/traefik-2.2.yml'
+    # Publish `v1.2.3` tags as releases.
+    tags:
+      - v*
+
+env:
+  IMAGE_NAME: traefik
+  IMAGE_VERSION: 2.2-alpine-r${{github.run_number}}
+  IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
+  IMAGE_REPOSITORY: containers
+
+jobs:
+
+  # Push image to GitHub Packages.
+  # See also https://docs.docker.com/docker-hub/builds/
+  push:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Build image
+        run: docker build --file traefik/2.2/Dockerfile
+            --label "org.opencontainers.image.source=https://github.com/techniumlabs/containers/traefik/2.2"
+            --label "org.opencontainers.image.revision=${{github.sha}}"
+            --label "org.opencontainers.image.vendor=techniumlabs"
+            --build-arg IMAGE_REGISTRY=${IMAGE_REGISTRY}
+            --build-arg IMAGE_REPOSITORY=${IMAGE_REPOSITORY}
+            --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image traefik/2.2
+
+        env:
+          MAINTAINER: devops@techniumlabs.com
+          TIMEZONE: Australia/Sydney
+
+      - name: Push image
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo IMAGE_VERSION=$IMAGE_VERSION
+
+          docker tag image $IMAGE_ID:$IMAGE_VERSION
+          docker push $IMAGE_ID:$IMAGE_VERSION
