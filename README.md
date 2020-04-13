@@ -34,5 +34,8 @@ version 2.2: ![Traefik 2.2 Image](https://github.com/techniumlabs/containers/wor
 
 ## Monitoring and Logging
 ### Thanos
+version 0.11: ![Thanos 0.11.1Image](https://github.com/techniumlabs/containers/workflows/Thanos%200.11.1Image/badge.svg)
+version 0.10: ![Thanos 0.10.1Image](https://github.com/techniumlabs/containers/workflows/Thanos%200.10.1Image/badge.svg)
 
 ### Loki
+version 1.3: ![Loki 1.3 Image](https://github.com/techniumlabs/containers/workflows/Loki%201.3%20Image/badge.svg)
