@@ -6,6 +6,6 @@ update_configs:
   - package_manager: "docker"
     directory: "/alpine/3.11"
     update_schedule: "daily"
-  - package_manager: "traefik"
+  - package_manager: "docker"
     directory: "/traefik/2.0"
     update_schedule: "daily"
