@@ -1,4 +1,15 @@
 # Containers
+    This repository contains dockerfiles for docker containers that is widely used.
+
+## Why ?
+    The images built are with the following in mind.
+
+    1. Deterministic builds
+    2. Tested Builds 
+    3. Continuous Patching
+    4. Linted
+    5. Support for injecting secrets via secret manager
+       1. Vault
 
 ## Base Images
 
@@ -35,6 +46,7 @@ version 2.2: ![Traefik 2.2 Image](https://github.com/techniumlabs/containers/wor
 ## Monitoring and Logging
 ### Thanos
 version 0.11: ![Thanos 0.11.1Image](https://github.com/techniumlabs/containers/workflows/Thanos%200.11.1Image/badge.svg)
+
 version 0.10: ![Thanos 0.10.1Image](https://github.com/techniumlabs/containers/workflows/Thanos%200.10.1Image/badge.svg)
 
 ### Loki
