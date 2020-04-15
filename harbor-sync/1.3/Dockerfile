@@ -15,6 +15,6 @@ RUN set -ex; \
 
 USER harborsync
 WORKDIR /home/harborsync
+COPY cinit.yaml /home/harborsync/.cinit.yaml
 
-EXPOSE 8080
 ENTRYPOINT ["cinit", "--", "harborsync"]
