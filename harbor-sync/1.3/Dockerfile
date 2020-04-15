@@ -17,4 +17,4 @@ USER harborsync
 WORKDIR /home/harborsync
 COPY cinit.yaml /home/harborsync/.cinit.yaml
 
-ENTRYPOINT ["cinit", "--", "harborsync"]
+ENTRYPOINT ["cinit", "--", "harbor-sync-controller"]
