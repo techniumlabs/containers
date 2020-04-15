@@ -1,6 +1,6 @@
 ARG  IMAGE_REGISTRY
 ARG  IMAGE_REPOSITORY
-FROM ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}/base:3.10-alpine-r10
+FROM ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}/base:3.10-alpine-r11
 
 ARG HARBORSYNC_VERSION="1.3.2"
 
@@ -14,6 +14,7 @@ RUN set -ex; \
   chmod +x /usr/local/bin/harbor-sync-controller;
 
 USER harborsync
+WORKDIR /home/harborsync
 
 EXPOSE 8080
-ENTRYPOINT ["harborsync"]
+ENTRYPOINT ["cinit", "--", "harborsync"]
