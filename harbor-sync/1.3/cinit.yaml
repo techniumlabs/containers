@@ -1,4 +1,4 @@
 ---
-provider:
+providers:
   secret:
     - vault
