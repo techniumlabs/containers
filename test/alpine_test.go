@@ -27,3 +27,24 @@ func TestAlpineVersion(t *testing.T) {
 	assert.Equal(t, output, "3.11.5")
 
 }
+
+func TestCinitVersion(t *testing.T) {
+	tag := "containers/alpine"
+	buildOptions := &docker.BuildOptions{
+		Tags:      []string{tag},
+		BuildArgs: []string{"TIMEZONE=Australia/Sydney", "MAINTAINER=devops@techniumlabs.com"},
+	}
+
+	docker.Build(t, "../alpine/3.10", buildOptions)
+
+	opts := &docker.RunOptions{Command: []string{"cinit", "version"}}
+	output := docker.Run(t, tag, opts)
+	assert.Matches(t, output, "Version: 0.0.1\n.*")
+
+	docker.Build(t, "../alpine/3.11", buildOptions)
+
+	opts = &docker.RunOptions{Command: []string{"cinit", "version"}}
+	output = docker.Run(t, tag, opts)
+	assert.Matches(t, output, "Version: 0.0.1\n.*")
+
+}
