@@ -54,3 +54,7 @@ version 0.10: ![Thanos 0.10.1Image](https://github.com/techniumlabs/containers/w
 
 ### Loki
 version 1.3: ![Loki 1.3 Image](https://github.com/techniumlabs/containers/workflows/Loki%201.3%20Image/badge.svg)
+
+## Security
+### Clair
+version 2.1: ![clair 2.1 Image](https://github.com/techniumlabs/containers/workflows/clair%202.1%20Image/badge.svg)
