@@ -5,11 +5,14 @@
     The images built are with the following in mind.
 
     1. Deterministic builds
-    2. Tested Builds 
+    2. Tested Builds
     3. Continuous Patching
     4. Linted
     5. Support for injecting secrets via secret manager
        1. Vault
+       2. AWS Secret Manager
+       3. AWS Parameter Store
+    6. Template Substitution in config file
 
 ## Base Images
 
