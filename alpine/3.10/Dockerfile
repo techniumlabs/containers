@@ -7,6 +7,7 @@ ARG TIMEZONE
 LABEL maintainer=${MAINTAINER}
 
 RUN apk --no-cache add tzdata=2019c-r0 \
+  openssl=1.1.1g-r0 \
   ca-certificates=20191127-r0 \
   && cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime \
   && echo "${TIMEZONE}" > /etc/timezone \
