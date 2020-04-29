@@ -6,7 +6,7 @@ ARG TIMEZONE
 
 LABEL maintainer=${MAINTAINER}
 
-RUN apk --no-cache add tzdata=2019c-r0 \
+RUN apk --no-cache add tzdata=2020a-r0 \
   ca-certificates=20191127-r1 \
   && cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime \
   && echo "${TIMEZONE}" > /etc/timezone \
@@ -14,7 +14,8 @@ RUN apk --no-cache add tzdata=2019c-r0 \
   && wget -O /tmp/cinit.tar.gz https://github.com/techniumlabs/cinit/releases/download/v0.0.1/cinit_0.0.1_linux_x86_64.tar.gz \
   && tar -xzvf /tmp/cinit.tar.gz -C /tmp \
   && mv /tmp/cinit /usr/local/bin/cinit \
-  && chmod +x /usr/local/bin/cinit
+  && chmod +x /usr/local/bin/cinit \
+  && rm -Rf /tmp/*
 
 ENV TERM="xterm" \
   LANG="C.UTF-8" \
