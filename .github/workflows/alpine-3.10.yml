@@ -23,6 +23,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Lint Dockerfile
+        run: docker run --rm -i hadolint/hadolint < alpine/3.10/Dockerfile
+
       - name: Build image
         run: docker build --file alpine/3.10/Dockerfile
             --label "org.opencontainers.image.source=https://github.com/techniumlabs/containers/alpine/3.10"
