@@ -1,5 +1,5 @@
-name: Thanos 0.11.1Image
 
+name: thanos-0.11
 on:
   push:
     # Publish `master` as Docker `latest` image.
@@ -8,20 +8,17 @@ on:
     paths:
       - 'thanos/0.11/**'
       - '.github/workflows/thanos-0.11.yml'
-    # Publish `v1.2.3` tags as releases.
-    tags:
-      - v*
 
 env:
-  IMAGE_NAME: thanos
+  IMAGE_DIR: thanos/0.11
+  IMAGE_NAME: base
   IMAGE_VERSION: 0.11-alpine-r${{github.run_number}}
-  IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
-  IMAGE_REPOSITORY: containers
+  MAINTAINER: devops@techniumlabs.com
+  TIMEZONE: Australia/Sydney
 
 jobs:
 
   # Push image to GitHub Packages.
-  # See also https://docs.docker.com/docker-hub/builds/
   push:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
@@ -29,21 +26,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: Lint Dockerfile
+        run: docker run --rm -i hadolint/hadolint < ${IMAGE_DIR}/Dockerfile
 
       - name: Build image
-        run: docker build --file thanos/0.11/Dockerfile
-            --label "org.opencontainers.image.source=https://github.com/techniumlabs/containers/thanos/0.11"
-            --label "org.opencontainers.image.revision=${{github.sha}}"
-            --label "org.opencontainers.image.vendor=techniumlabs"
-            --build-arg IMAGE_REGISTRY=${IMAGE_REGISTRY}
-            --build-arg IMAGE_REPOSITORY=${IMAGE_REPOSITORY}
-            --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image thanos/0.11
-
-        env:
-          MAINTAINER: devops@techniumlabs.com
-          TIMEZONE: Australia/Sydney
+        run: docker build --file ${IMAGE_DIR}/Dockerfile
+              --label "org.opencontainers.image.source=https://github.com/techniumlabs/containers/${IMAGE_DIR}"
+              --label "org.opencontainers.image.revision=${{ github.sha }}"
+              --label "org.opencontainers.image.vendor=techniumlabs"
+              --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image ${IMAGE_DIR}
 
       - name: Install trivy
         run: |
@@ -56,6 +47,9 @@ jobs:
           ./trivy --exit-code 0 --severity UNKNOWN,LOW,MEDIUM --no-progress image
           ./trivy --exit-code 1 --severity HIGH,CRITICAL --no-progress image
 
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
       - name: Push image
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
@@ -65,3 +59,4 @@ jobs:
 
           docker tag image $IMAGE_ID:$IMAGE_VERSION
           docker push $IMAGE_ID:$IMAGE_VERSION
+        

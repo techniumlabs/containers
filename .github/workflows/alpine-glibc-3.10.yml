@@ -1,5 +1,5 @@
-name: Alpine glibc 3.10 Image
 
+name: alpine-glibc-3.10
 on:
   push:
     # Publish `master` as Docker `latest` image.
@@ -8,20 +8,17 @@ on:
     paths:
       - 'alpine-glibc/3.10/**'
       - '.github/workflows/alpine-glibc-3.10.yml'
-    # Publish `v1.2.3` tags as releases.
-    tags:
-      - v*
 
 env:
-  IMAGE_NAME: base-glibc
+  IMAGE_DIR: alpine-glibc/3.10
+  IMAGE_NAME: base
   IMAGE_VERSION: 3.10-alpine-r${{github.run_number}}
-  IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
-  IMAGE_REPOSITORY: containers
+  MAINTAINER: devops@techniumlabs.com
+  TIMEZONE: Australia/Sydney
 
 jobs:
 
   # Push image to GitHub Packages.
-  # See also https://docs.docker.com/docker-hub/builds/
   push:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
@@ -29,21 +26,29 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: Lint Dockerfile
+        run: docker run --rm -i hadolint/hadolint < ${IMAGE_DIR}/Dockerfile
 
       - name: Build image
-        run: docker build --file alpine-glibc/3.10/Dockerfile
-            --label "org.opencontainers.image.source=https://github.com/techniumlabs/containers/alpine-glibc/3.10"
-            --label "org.opencontainers.image.revision=${{github.sha}}"
-            --label "org.opencontainers.image.vendor=techniumlabs"
-            --build-arg IMAGE_REGISTRY=${IMAGE_REGISTRY}
-            --build-arg IMAGE_REPOSITORY=${IMAGE_REPOSITORY}
-            --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image alpine-glibc/3.10
+        run: docker build --file ${IMAGE_DIR}/Dockerfile
+              --label "org.opencontainers.image.source=https://github.com/techniumlabs/containers/${IMAGE_DIR}"
+              --label "org.opencontainers.image.revision=${{ github.sha }}"
+              --label "org.opencontainers.image.vendor=techniumlabs"
+              --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image ${IMAGE_DIR}
 
-        env:
-          MAINTAINER: devops@techniumlabs.com
-          TIMEZONE: Australia/Sydney
+      - name: Install trivy
+        run: |
+          export VERSION=$(curl --silent "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+          wget https://github.com/aquasecurity/trivy/releases/download/v${VERSION}/trivy_${VERSION}_Linux-64bit.tar.gz
+          tar zxvf trivy_${VERSION}_Linux-64bit.tar.gz
+
+      - name: Scan Container
+        run: |
+          ./trivy --exit-code 0 --severity UNKNOWN,LOW,MEDIUM --no-progress image
+          ./trivy --exit-code 1 --severity HIGH,CRITICAL --no-progress image
+
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: Push image
         run: |
@@ -54,3 +59,4 @@ jobs:
 
           docker tag image $IMAGE_ID:$IMAGE_VERSION
           docker push $IMAGE_ID:$IMAGE_VERSION
+        
