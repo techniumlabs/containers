@@ -8,7 +8,7 @@ RUN git clone --branch v2.1.3 https://github.com/quay/clair.git
 WORKDIR /go/clair/
 RUN go build -ldflags "-X github.com/quay/clair/v3/pkg/version.Version=v2.1.3" ./cmd/clair
 
-FROM ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}/base:3.10-alpine-r13
+FROM ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}/base:3.10-alpine-r17
 COPY --from=build /go/clair/clair /clair
 
 RUN mkdir /etc/clair \
