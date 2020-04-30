@@ -1,9 +1,7 @@
 SHELL							:= /bin/bash
 WORKING_DIR				:= $(shell pwd)
 CONTAINER_BUILDER	:= docker
-APP_NAME          := ${IMAGE_NAME}
-APP_VERSION       := ${IMAGE_VERSION}
-
+IMAGE_DIR         := ${IMAGE_NAME}/${IMAGE_VERSION}
 
 .DEFAULT_GOAL := help
 
@@ -17,17 +15,17 @@ __check_defined = \
 .PHONY: build
 
 build:: ## Build image
-	$(CONTAINER_BUILDER) build --file ${APP_NAME}/${APP_VERSION}/Dockerfile \
+	$(CONTAINER_BUILDER) build --file ${IMAGE_DIR}/Dockerfile \
 		--build-arg IMAGE_REGISTRY=docker.pkg.github.com/techniumlabs \
 		--build-arg IMAGE_REPOSITORY=containers \
-	--tag techniumlabs/${IMAGE_NAME}:${IMAGE_VERSION} ${APP_NAME}/${APP_VERSION}
+	--tag techniumlabs/${IMAGE_NAME}:${IMAGE_VERSION} ${IMAGE_DIR}
 
 scan:: ## Scan the image
 	@trivy --exit-code 0 --severity UNKNOWN,LOW,MEDIUM --no-progress image
 	@trivy --exit-code 1 --severity HIGH,CRITICAL --no-progress image
 
 lint:: ## Lint the image
-	@hadolint ${APP_NAME}/${APP_VERSION}/Dockerfile
+	@hadolint ${IMAGE_DIR}/Dockerfile
 
 # A help target including self-documenting targets (see the awk statement)
 help: ## This help target

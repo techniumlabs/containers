@@ -10,8 +10,7 @@ on:
       - '.github/workflows/alpine-3.10.yml'
 
 env:
-  APP_NAME: alpine
-  APP_VERSION: "3.10"
+  IMAGE_DIR: alpine/3.10
   IMAGE_NAME: base
   IMAGE_VERSION: 3.10-alpine-r${{github.run_number}}
   MAINTAINER: devops@techniumlabs.com
@@ -28,14 +27,14 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Lint Dockerfile
-        run: docker run --rm -i hadolint/hadolint < ${APP_NAME}/${APP_VERSION}/Dockerfile
+        run: docker run --rm -i hadolint/hadolint < ${IMAGE_DIR}/Dockerfile
 
       - name: Build image
-        run: docker build --file ${APP_NAME}/${APP_VERSION}/Dockerfile
-            --label "org.opencontainers.image.source=https://github.com/techniumlabs/containers/${APP_NAME}/${APP_VERSION}"
+        run: docker build --file ${IMAGE_DIR}/Dockerfile
+            --label "org.opencontainers.image.source=https://github.com/techniumlabs/containers/${IMAGE_DIR}"
             --label "org.opencontainers.image.revision=${{github.sha}}"
             --label "org.opencontainers.image.vendor=techniumlabs"
-            --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image ${APP_NAME}/${APP_VERSION}
+            --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image ${IMAGE_DIR}
 
       - name: Install trivy
         run: |
