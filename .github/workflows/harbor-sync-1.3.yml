@@ -45,6 +45,17 @@ jobs:
           MAINTAINER: devops@techniumlabs.com
           TIMEZONE: Australia/Sydney
 
+      - name: Install trivy
+        run: |
+          export VERSION=$(curl --silent "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+          wget https://github.com/aquasecurity/trivy/releases/download/v${VERSION}/trivy_${VERSION}_Linux-64bit.tar.gz
+          tar zxvf trivy_${VERSION}_Linux-64bit.tar.gz
+
+      - name: Scan Container
+        run: |
+          ./trivy --exit-code 0 --severity UNKNOWN,LOW,MEDIUM --no-progress image
+          ./trivy --exit-code 1 --severity HIGH,CRITICAL --no-progress image
+
       - name: Push image
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME

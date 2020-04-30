@@ -13,7 +13,7 @@ WORKDIR $GOPATH/src/github.com/moolen/harbor-sync
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -a -o harbor-sync-controller main.go \
   && cp harbor-sync-controller /usr/local/bin/harbor-sync-controller
 
-FROM ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}/base:3.10-alpine-r11
+FROM ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}/base:3.10-alpine-r17
 ARG HARBORSYNC_VERSION="1.3.2"
 
 RUN addgroup -g 1000 harborsync && \
