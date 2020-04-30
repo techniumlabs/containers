@@ -28,6 +28,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
       - name: Lint Dockerfile
         run: docker run --rm -i hadolint/hadolint < ${IMAGE_DIR}/Dockerfile
 
@@ -51,9 +54,6 @@ jobs:
           ./trivy --exit-code 0 --severity UNKNOWN,LOW,MEDIUM --no-progress image
           ./trivy --exit-code 1 --severity HIGH,CRITICAL --no-progress image
 
-      - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
       - name: Push image
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
@@ -63,4 +63,16 @@ jobs:
 
           docker tag image $IMAGE_ID:$IMAGE_VERSION
           docker push $IMAGE_ID:$IMAGE_VERSION
+
+      - name: Login to docker hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Push image to docker hub
+        run: |
+          IMAGE_ID=techniumlabs/$IMAGE_NAME
+          echo IMAGE_ID=$IMAGE_ID
+          echo IMAGE_VERSION=$IMAGE_VERSION
+          docker tag image $IMAGE_ID:$IMAGE_VERSION
+          docker push $IMAGE_ID:$IMAGE_VERSION
+
         
