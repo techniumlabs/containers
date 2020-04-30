@@ -97,6 +97,8 @@ RUN set -eux; \
   libedit-dev=20190324.3.1-r0 \
   libsodium-dev=1.0.18-r0 \
   libxml2-dev=2.9.9-r3 \
+  linux-headers=4.19.36-r0 \
+  oniguruma-dev=6.9.4-r0 \
   sqlite-dev=3.28.0-r2 \
   ; \
   \
