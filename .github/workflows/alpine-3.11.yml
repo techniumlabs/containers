@@ -1,5 +1,5 @@
-name: Alpine 3.11 Image
 
+name: alpine-3.11
 on:
   push:
     # Publish `master` as Docker `latest` image.
@@ -10,8 +10,11 @@ on:
       - '.github/workflows/alpine-3.11.yml'
 
 env:
+  IMAGE_DIR: alpine/3.11
   IMAGE_NAME: base
   IMAGE_VERSION: 3.11-alpine-r${{github.run_number}}
+  MAINTAINER: devops@techniumlabs.com
+  TIMEZONE: Australia/Sydney
 
 jobs:
 
@@ -23,17 +26,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Lint Dockerfile
+        run: docker run --rm -i hadolint/hadolint < ${ IMAGE_DIR }/Dockerfile
+
       - name: Build image
-        run: docker build --file alpine/3.11/Dockerfile --build-arg MAINTAINER=${MAINTAINER} --build-arg TIMEZONE=${TIMEZONE} --tag image alpine/3.11
-        env:
-          MAINTAINER: devops@techniumlabs.com
-          TIMEZONE: Australia/Sydney
+        run: docker build --file ${ IMAGE_DIR }/Dockerfile
+              --label "org.opencontainers.image.source=https://github.com/techniumlabs/containers/${ IMAGE_DIR }"
+              --label "org.opencontainers.image.revision=${{ github.sha }}"
+              --label "org.opencontainers.image.vendor=techniumlabs"
+              --build-arg MAINTAINER=${ MAINTAINER } --build-arg TIMEZONE=${ TIMEZONE } --tag image ${ IMAGE_DIR }
 
       - name: Install trivy
         run: |
-          export VERSION=$(curl --silent "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
-          wget https://github.com/aquasecurity/trivy/releases/download/v${VERSION}/trivy_${VERSION}_Linux-64bit.tar.gz
-          tar zxvf trivy_${VERSION}_Linux-64bit.tar.gz
+          export VERSION=$(curl --silent "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*//')
+          wget https://github.com/aquasecurity/trivy/releases/download/v${ VERSION }/trivy_${ VERSION }_Linux-64bit.tar.gz
+          tar zxvf trivy_${ VERSION }_Linux-64bit.tar.gz
 
       - name: Scan Container
         run: |
@@ -41,7 +48,7 @@ jobs:
           ./trivy --exit-code 1 --severity HIGH,CRITICAL --no-progress image
 
       - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+          run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: Push image
         run: |
@@ -52,3 +59,4 @@ jobs:
 
           docker tag image $IMAGE_ID:$IMAGE_VERSION
           docker push $IMAGE_ID:$IMAGE_VERSION
+        
