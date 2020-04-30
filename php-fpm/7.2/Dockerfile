@@ -33,7 +33,7 @@ ENV GPG_KEYS 1729F83938DA44E27BA0F4D3DBDB397470D12172 B1B44D8F021E4E2D6021E995DC
 
 ENV PHP_VERSION 7.2.30
 ENV PHP_URL="https://github.com/techniumlabs/php-releases/releases/download/7.2.30/php-7.2.30.tar.xz" PHP_ASC_URL="https://github.com/techniumlabs/php-releases/releases/download/7.2.30/php-7.2.30.tar.xz.asc"
-ENV PHP_SHA256="daa53d22510b0fd433904d1c3de460746860a974b776f727ac8acecb44e16e2f" PHP_MD5=""
+ENV PHP_SHA256="aa93df27b58a45d6c9800ac813245dfdca03490a918ebe515b3a70189b1bf8c3" PHP_MD5=""
 
 COPY docker-php-* /usr/local/bin/
 

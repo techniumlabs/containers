@@ -31,19 +31,17 @@ ENV PHP_LDFLAGS="-Wl,-O1 -Wl,--hash-style=both -pie"
 
 ENV GPG_KEYS CBAF69F173A0FEA4B537F470D66C9593118BCCB6 F38252826ACD957EF380D39F2F7956BC5DA04B5D
 
-ENV PHP_VERSION 7.3.16
-ENV PHP_URL="https://www.php.net/distributions/php-7.3.16.tar.xz" PHP_ASC_URL="https://www.php.net/distributions/php-7.3.16.tar.xz.asc"
-ENV PHP_SHA256="91aaee3dbdc71b69b4f3292f9d99211172a2fa926c3f3bbdb0e85dab03dd2bcb" PHP_MD5=""
+ENV PHP_VERSION 7.3.17
+ENV PHP_URL="https://github.com/techniumlabs/php-releases/releases/download/7.3.17/php-7.3.17.tar.xz" PHP_ASC_URL="https://github.com/techniumlabs/php-releases/releases/download/7.3.17/php-7.3.17.tar.xz.asc"
+ENV PHP_SHA256="6a30304c27f7e7a94538f5ffec599f600ee93aedbbecad8aa4f8bec539b10ad8" PHP_MD5=""
 
 COPY docker-php-* /usr/local/bin/
 
 # persistent / runtime deps
 RUN apk add --no-cache \
-  ca-certificates=20190108-r0 \
   curl=7.66.0-r0 \
   tar=1.32-r0 \
-  xz=5.2.4-r0 \
-  openssl=1.1.1d-r2
+  xz=5.2.4-r0
 
 # ensure www-data user exists
 RUN set -eux; \
@@ -99,7 +97,6 @@ RUN set -eux; \
   libedit-dev=20190324.3.1-r0 \
   libsodium-dev=1.0.18-r0 \
   libxml2-dev=2.9.9-r3 \
-  openssl-dev=1.1.1d-r2 \
   sqlite-dev=3.28.0-r2 \
   ; \
   \
