@@ -39,11 +39,9 @@ COPY docker-php-* /usr/local/bin/
 
 # persistent / runtime deps
 RUN apk add --no-cache \
-  ca-certificates=20190108-r0 \
   curl=7.66.0-r0 \
   tar=1.32-r0 \
-  xz=5.2.4-r0 \
-  openssl=1.1.1d-r2
+  xz=5.2.4-r0
 
 # ensure www-data user exists
 RUN set -eux; \
@@ -99,7 +97,6 @@ RUN set -eux; \
   libedit-dev=20190324.3.1-r0 \
   libsodium-dev=1.0.18-r0 \
   libxml2-dev=2.9.9-r3 \
-  openssl-dev=1.1.1d-r2 \
   sqlite-dev=3.28.0-r2 \
   ; \
   \
