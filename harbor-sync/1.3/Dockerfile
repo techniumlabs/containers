@@ -4,7 +4,7 @@ ARG  IMAGE_REPOSITORY
 # Golang build container
 FROM golang:1.14-alpine as gobuilder
 
-RUN apk add --no-cache gcc=9.2.0-r4 g++=9.2.0-r4 git=2.24.2-r0
+RUN apk add --no-cache gcc=9.2.0-r4 g++=9.2.0-r4 git=2.24.3-r0
 
 WORKDIR $GOPATH/src/github.com/moolen
 RUN git clone --branch v1.3.2 https://github.com/moolen/harbor-sync.git
