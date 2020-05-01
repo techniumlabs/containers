@@ -1,0 +1,38 @@
+---
+apps:
+  - name: alpine
+    image_name: base
+    versions:
+      - name: "3.10"
+      - name: "3.11"
+  - name: alpine-glibc
+    image_name: base
+    versions:
+      - name: "3.10"
+      - name: "3.11"
+  - name: clair
+    versions:
+      - name: 2.1
+  - name: harbor-sync
+    versions:
+      - name: 1.3
+  - name: loki
+    versions:
+      - name: 1.3
+  - name: harbor-sync
+    versions:
+      - name: 1.3
+  - name: php-fpm
+    versions:
+      - name: 7.2
+      - name: 7.3
+      - name: 7.4
+  - name: thanos
+    versions:
+      - name: "0.10"
+      - name: 0.11
+  - name: traefik
+    versions:
+      - name: "2.0"
+      - name: 2.1
+      - name: 2.2
