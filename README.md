@@ -17,44 +17,48 @@
 ## Base Images
 
 ### Alpine
-version 3.10: ![Alpine 3.10 Image](https://github.com/techniumlabs/containers/workflows/Alpine%203.10%20Image/badge.svg)
+version 3.10: ![alpine-3.10](https://github.com/techniumlabs/containers/workflows/alpine-3.10/badge.svg)
 
-version 3.11: ![Alpine 3.11 Image](https://github.com/techniumlabs/containers/workflows/Alpine%203.11%20Image/badge.svg)
+version 3.11: ![alpine-3.11](https://github.com/techniumlabs/containers/workflows/alpine-3.11/badge.svg)
 
 
 ### Alpine Glibc
-version 3.10: ![Alpine glibc 3.10 Image](https://github.com/techniumlabs/containers/workflows/Alpine%20glibc%203.10%20Image/badge.svg)
+version 3.10: ![alpine-glibc-3.10](https://github.com/techniumlabs/containers/workflows/alpine-glibc-3.10/badge.svg)
 
 
 ## PHP
 
 ### PHP-FPM
-version 7.2: ![PHP FPM 7.2 Image](https://github.com/techniumlabs/containers/workflows/PHP%20FPM%207.2%20Image/badge.svg)
+version 7.2: ![php-fpm-7.2](https://github.com/techniumlabs/containers/workflows/php-fpm-7.2/badge.svg)
 
-version 7.3: ![PHP FPM 7.3 Image](https://github.com/techniumlabs/containers/workflows/PHP%20FPM%207.3%20Image/badge.svg)
+version 7.3: ![php-fpm-7.3](https://github.com/techniumlabs/containers/workflows/php-fpm-7.3/badge.svg)
 
-version 7.4: ![PHP FPM 7.4 Image](https://github.com/techniumlabs/containers/workflows/PHP%20FPM%207.4%20Image/badge.svg)
+version 7.4: ![php-fpm-7.4](https://github.com/techniumlabs/containers/workflows/php-fpm-7.4/badge.svg)
 
 
 ## Reverse Proxies
 
 ### Traefik
-version 2.0: ![Traefik 2.0 Image](https://github.com/techniumlabs/containers/workflows/Traefik%202.0%20Image/badge.svg)
+version 2.0: ![traefik-2.0](https://github.com/techniumlabs/containers/workflows/traefik-2.0/badge.svg)
 
-version 2.1: ![Traefik 2.1 Image](https://github.com/techniumlabs/containers/workflows/Traefik%202.1%20Image/badge.svg)
+version 2.1: ![traefik-2.1](https://github.com/techniumlabs/containers/workflows/traefik-2.1/badge.svg)
 
-version 2.2: ![Traefik 2.2 Image](https://github.com/techniumlabs/containers/workflows/Traefik%202.2%20Image/badge.svg)
+version 2.2: ![traefik-2.2](https://github.com/techniumlabs/containers/workflows/traefik-2.2/badge.svg)
 
 
 ## Monitoring and Logging
 ### Thanos
-version 0.11: ![Thanos 0.11.1Image](https://github.com/techniumlabs/containers/workflows/Thanos%200.11.1Image/badge.svg)
+version 0.10: ![thanos-0.10](https://github.com/techniumlabs/containers/workflows/thanos-0.10/badge.svg)
 
-version 0.10: ![Thanos 0.10.1Image](https://github.com/techniumlabs/containers/workflows/Thanos%200.10.1Image/badge.svg)
+version 0.11: ![thanos-0.11](https://github.com/techniumlabs/containers/workflows/thanos-0.11/badge.svg)
 
 ### Loki
-version 1.3: ![Loki 1.3 Image](https://github.com/techniumlabs/containers/workflows/Loki%201.3%20Image/badge.svg)
+version 1.3: ![loki-1.3](https://github.com/techniumlabs/containers/workflows/loki-1.3/badge.svg)
 
 ## Security
 ### Clair
-version 2.1: ![clair 2.1 Image](https://github.com/techniumlabs/containers/workflows/clair%202.1%20Image/badge.svg)
+version 2.1: ![clair-2.1](https://github.com/techniumlabs/containers/workflows/clair-2.1/badge.svg)
+
+## Utilties
+### Harbor Sync
+version 1.3: ![harbor-sync-1.3](https://github.com/techniumlabs/containers/workflows/harbor-sync-1.3/badge.svg)
