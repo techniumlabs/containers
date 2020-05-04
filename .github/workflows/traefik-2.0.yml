@@ -11,8 +11,8 @@ on:
 
 env:
   IMAGE_DIR: traefik/2.0
-  IMAGE_NAME: base
-  IMAGE_VERSION: 2.0-alpine-r${{github.run_number}}
+  IMAGE_NAME: traefik
+  IMAGE_VERSION: 2.0-r${{github.run_number}}
   IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
   IMAGE_REPOSITORY: containers
   MAINTAINER: devops@techniumlabs.com

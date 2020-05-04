@@ -1,18 +1,18 @@
 
-name: alpine-glibc-3.10
+name: alpine-glibc-3.11
 on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
       - master
     paths:
-      - 'alpine-glibc/3.10/**'
-      - '.github/workflows/alpine-glibc-3.10.yml'
+      - 'alpine-glibc/3.11/**'
+      - '.github/workflows/alpine-glibc-3.11.yml'
 
 env:
-  IMAGE_DIR: alpine-glibc/3.10
+  IMAGE_DIR: alpine-glibc/3.11
   IMAGE_NAME: alpine-glibc
-  IMAGE_VERSION: 3.10-r${{github.run_number}}
+  IMAGE_VERSION: 3.11-r${{github.run_number}}
   IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
   IMAGE_REPOSITORY: containers
   MAINTAINER: devops@techniumlabs.com

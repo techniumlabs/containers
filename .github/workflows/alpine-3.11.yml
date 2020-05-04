@@ -11,8 +11,8 @@ on:
 
 env:
   IMAGE_DIR: alpine/3.11
-  IMAGE_NAME: base
-  IMAGE_VERSION: 3.11-alpine-r${{github.run_number}}
+  IMAGE_NAME: alpine
+  IMAGE_VERSION: 3.11-r${{github.run_number}}
   IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
   IMAGE_REPOSITORY: containers
   MAINTAINER: devops@techniumlabs.com

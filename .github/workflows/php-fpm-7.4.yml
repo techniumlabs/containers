@@ -11,8 +11,8 @@ on:
 
 env:
   IMAGE_DIR: php-fpm/7.4
-  IMAGE_NAME: base
-  IMAGE_VERSION: 7.4-alpine-r${{github.run_number}}
+  IMAGE_NAME: php-fpm
+  IMAGE_VERSION: 7.4-r${{github.run_number}}
   IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
   IMAGE_REPOSITORY: containers
   MAINTAINER: devops@techniumlabs.com

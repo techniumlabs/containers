@@ -11,8 +11,8 @@ on:
 
 env:
   IMAGE_DIR: thanos/0.11
-  IMAGE_NAME: base
-  IMAGE_VERSION: 0.11-alpine-r${{github.run_number}}
+  IMAGE_NAME: thanos
+  IMAGE_VERSION: 0.11-r${{github.run_number}}
   IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
   IMAGE_REPOSITORY: containers
   MAINTAINER: devops@techniumlabs.com

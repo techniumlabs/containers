@@ -1,12 +1,10 @@
 ---
 apps:
   - name: alpine
-    image_name: base
     versions:
       - name: "3.10"
       - name: "3.11"
   - name: alpine-glibc
-    image_name: base
     versions:
       - name: "3.10"
       - name: "3.11"

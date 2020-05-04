@@ -18,8 +18,8 @@ on:
 
 env:
   IMAGE_DIR: {app['name']}/{version['name']}
-  IMAGE_NAME: base
-  IMAGE_VERSION: {version['name']}-alpine-r${{{{github.run_number}}}}
+  IMAGE_NAME: {app['name']}
+  IMAGE_VERSION: {version['name']}-r${{{{github.run_number}}}}
   IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
   IMAGE_REPOSITORY: containers
   MAINTAINER: devops@techniumlabs.com
