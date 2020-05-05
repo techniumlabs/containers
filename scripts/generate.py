@@ -9,12 +9,13 @@ for app in appconfig['apps']:
 name: {app['name']}-{version['name']}
 on:
   push:
-    # Publish `master` as Docker `latest` image.
     branches:
       - master
+    tags:
+      - '{app["name"]}/{version["name"]}/*'
     paths:
-      - '{app['name']}/{version['name']}/**'
-      - '.github/workflows/{app['name']}-{version['name']}.yml'
+      - '{app["name"]}/{version["name"]}/**'
+      - '.github/workflows/{app["name"]}-{version["name"]}.yml'
 
 env:
   IMAGE_DIR: {app['name']}/{version['name']}
@@ -26,9 +27,7 @@ env:
   TIMEZONE: Australia/Sydney
 
 jobs:
-
-  # Push image to GitHub Packages.
-  push:
+  release:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
 
@@ -48,7 +47,9 @@ jobs:
               --label "org.opencontainers.image.vendor=techniumlabs"
               --build-arg IMAGE_REGISTRY=${{IMAGE_REGISTRY}}
               --build-arg IMAGE_REPOSITORY=${{IMAGE_REPOSITORY}}
-              --build-arg MAINTAINER=${{MAINTAINER}} --build-arg TIMEZONE=${{TIMEZONE}} --tag image ${{IMAGE_DIR}}
+              --build-arg MAINTAINER=${{MAINTAINER}}
+              --build-arg TIMEZONE=${{TIMEZONE}}
+              --tag image ${{IMAGE_DIR}}
 
       - name: Install trivy
         run: |
