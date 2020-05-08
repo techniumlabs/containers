@@ -12,6 +12,7 @@
        1. Vault
        2. AWS Secret Manager
        3. AWS Parameter Store
+       4. [TODO] Azure keyvault
     6. Template Substitution in config file
 
 ## Base Images
