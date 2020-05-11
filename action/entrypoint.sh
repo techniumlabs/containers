@@ -136,9 +136,9 @@ function isSemver() {
 }
 
 function setupTrivy() {
-  export VERSION=$(curl --silent "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
-  wget https://github.com/aquasecurity/trivy/releases/download/v${VERSION}/trivy_${VERSION}_Linux-64bit.tar.gz
-  tar zxvf trivy_${VERSION}_Linux-64bit.tar.gz
+  export TRIVY_VERSION=$(curl --silent "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+  wget https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz
+  tar zxvf trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz
 }
 
 function lint() {
@@ -146,7 +146,8 @@ function lint() {
 }
 
 function scan() {
-  setupTrivy() ./trivy --exit-code 0 --severity UNKNOWN,LOW,MEDIUM --no-progress image
+  setupTrivy
+  ./trivy --exit-code 0 --severity UNKNOWN,LOW,MEDIUM --no-progress image
   ./trivy --exit-code 1 --severity HIGH,CRITICAL --no-progress image
 }
 
