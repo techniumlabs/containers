@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Publish to registry
-        uses: ./
+        uses: ./action
         with:
           name: docker.pkg.github.com/techniumlabs
           username: ${{ github.actor }}
