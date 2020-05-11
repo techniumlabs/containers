@@ -10,10 +10,10 @@ on:
 
 env:
   IMAGE_VERSION: 3.10-r${{github.run_number}}
-  IMAGE_REPOSITORY: IMAGE_REPOSITORY=containers
-  IMAGE_REGISTRY: IMAGE_REGISTRY=docker.pkg.github.com/techniumlabs
-  MAINTAINER: MAINTAINER=devops@techniumlabs.com
-  TIMEZONE: TIMEZONE=Australia/Sydney
+  IMAGE_REPOSITORY: containers
+  IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
+  MAINTAINER: devops@techniumlabs.com
+  TIMEZONE: Australia/Sydney
 
 jobs:
 
