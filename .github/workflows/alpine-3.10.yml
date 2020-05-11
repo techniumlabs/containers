@@ -10,9 +10,10 @@ on:
 
 env:
   IMAGE_VERSION: 3.10-r${{github.run_number}}
-  IMAGE_REPOSITORY: containers
-  MAINTAINER: devops@techniumlabs.com
-  TIMEZONE: Australia/Sydney
+  IMAGE_REPOSITORY: IMAGE_REPOSITORY=containers
+  IMAGE_REGISTRY: IMAGE_REGISTRY=docker.pkg.github.com/techniumlabs
+  MAINTAINER: MAINTAINER=devops@techniumlabs.com
+  TIMEZONE: TIMEZONE=Australia/Sydney
 
 jobs:
 
@@ -31,3 +32,4 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets. GITHUB_TOKEN }}
           workdir: alpine/3.10
+          buildargs: IMAGE_REGISTRY,IMAGE_REPOSITORY,MAINTAINER,TIMEZONE

@@ -141,6 +141,10 @@ function setupTrivy() {
   tar zxvf trivy_${VERSION}_Linux-64bit.tar.gz
 }
 
+function lint() {
+  docker run --rm -i hadolint/hadolint <Dockerfile
+}
+
 function scan() {
   setupTrivy() ./trivy --exit-code 0 --severity UNKNOWN,LOW,MEDIUM --no-progress image
   ./trivy --exit-code 1 --severity HIGH,CRITICAL --no-progress image
@@ -159,6 +163,9 @@ function push() {
   for TAG in ${TAGS}; do
     BUILD_TAGS="${BUILD_TAGS}-t ${INPUT_NAME}:${TAG} "
   done
+
+  lint
+
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} ${BUILD_TAGS} ${CONTEXT}
 
   for TAG in ${TAGS}; do
