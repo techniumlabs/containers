@@ -33,3 +33,4 @@ jobs:
           password: ${{ secrets. GITHUB_TOKEN }}
           workdir: alpine/3.10
           buildargs: IMAGE_REGISTRY,IMAGE_REPOSITORY,MAINTAINER,TIMEZONE
+          tag_names: true
