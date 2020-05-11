@@ -29,6 +29,7 @@ jobs:
       - name: Publish to registry
         uses: ./action
         with:
-          name: docker.pkg.github.com/techniumlabs
+          name: ${IMAGE_NAME}
+          registry: ${IMAGE_REGISTRY}
           username: ${{ github.actor }}
           password: ${{ secrets. GITHUB_TOKEN }}
