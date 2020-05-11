@@ -9,10 +9,7 @@ on:
       - '.github/workflows/alpine-3.10.yml'
 
 env:
-  IMAGE_DIR: alpine/3.10
-  IMAGE_NAME: alpine
   IMAGE_VERSION: 3.10-r${{github.run_number}}
-  IMAGE_REGISTRY: docker.pkg.github.com/techniumlabs
   IMAGE_REPOSITORY: containers
   MAINTAINER: devops@techniumlabs.com
   TIMEZONE: Australia/Sydney
@@ -29,7 +26,8 @@ jobs:
       - name: Publish to registry
         uses: ./action
         with:
-          name: ${IMAGE_NAME}
-          registry: ${IMAGE_REGISTRY}
+          name: alpine
+          registry: docker.pkg.github.com/techniumlabs
           username: ${{ github.actor }}
           password: ${{ secrets. GITHUB_TOKEN }}
+          workdir: alpine/3.10
