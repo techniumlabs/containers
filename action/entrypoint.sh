@@ -8,6 +8,7 @@ function main() {
   sanitize "${INPUT_USERNAME}" "username"
   sanitize "${INPUT_PASSWORD}" "password"
 
+  export IMAGE_NAME="${INPUT_NAME}"
   REGISTRY_NO_PROTOCOL=$(echo "${INPUT_REGISTRY}" | sed -e 's/^https:\/\///g')
   if uses "${INPUT_REGISTRY}" && ! isPartOfTheName "${REGISTRY_NO_PROTOCOL}"; then
     INPUT_NAME="${REGISTRY_NO_PROTOCOL}/${INPUT_NAME}"
@@ -74,7 +75,7 @@ function translateDockerTag() {
   elif isGitTag && usesBoolean "${INPUT_TAG_SEMVER}" && isSemver "${GITHUB_REF}"; then
     TAGS=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g" | sed -E "s/v?([0-9]+)\.([0-9+])\.([0-9]+)(-[a-zA-Z]+(\.[0-9]+)?)?/\1.\2.\3\4 \1.\2\4 \1\4/g")
   elif isGitTag && usesBoolean "${INPUT_TAG_NAMES}"; then
-    TAGS=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g" | sed -e "s/${INPUT_NAME}//g")
+    TAGS=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g" | sed -e "s/${IMAGE_NAME}-//g")
   elif isGitTag; then
     TAGS="latest"
   elif isPullRequest; then
