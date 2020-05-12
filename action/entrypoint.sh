@@ -146,9 +146,10 @@ function lint() {
 }
 
 function scan() {
+  local image=$1
   setupTrivy
-  ./trivy --exit-code 0 --severity UNKNOWN,LOW,MEDIUM --no-progress image
-  ./trivy --exit-code 1 --severity HIGH,CRITICAL --no-progress image
+  ./trivy --exit-code 0 --severity UNKNOWN,LOW,MEDIUM --no-progress ${image}
+  ./trivy --exit-code 1 --severity HIGH,CRITICAL --no-progress ${image}
 }
 
 function useSnapshot() {
@@ -170,7 +171,7 @@ function push() {
   docker build ${INPUT_BUILDOPTIONS} ${BUILDPARAMS} ${BUILD_TAGS} ${CONTEXT}
 
   for TAG in ${TAGS}; do
-    scan ${INPUT_NAME}:${TAG}
+    scan "${INPUT_NAME}:${TAG}"
     docker push "${INPUT_NAME}:${TAG}"
   done
 }
