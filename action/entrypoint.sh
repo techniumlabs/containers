@@ -8,7 +8,6 @@ function main() {
   sanitize "${INPUT_USERNAME}" "username"
   sanitize "${INPUT_PASSWORD}" "password"
 
-  export IMAGE_NAME="${INPUT_NAME##*/}"
   REGISTRY_NO_PROTOCOL=$(echo "${INPUT_REGISTRY}" | sed -e 's/^https:\/\///g')
   if uses "${INPUT_REGISTRY}" && ! isPartOfTheName "${REGISTRY_NO_PROTOCOL}"; then
     INPUT_NAME="${REGISTRY_NO_PROTOCOL}/${INPUT_NAME}"
@@ -68,7 +67,9 @@ function isPartOfTheName() {
 }
 
 function translateDockerTag() {
-  local BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g" | sed -e "s/\//-/g")
+  BRANCH=$(echo ${GITHUB_REF} | sed -e "s/refs\/heads\///g" | sed -e "s/\//-/g")
+  IMAGE_NAME="${INPUT_NAME##*/}"
+
   if hasCustomTag; then
     TAGS=$(echo ${INPUT_NAME} | cut -d':' -f2)
     INPUT_NAME=$(echo ${INPUT_NAME} | cut -d':' -f1)
@@ -96,7 +97,7 @@ function isOnMaster() {
 }
 
 function isGitTag() {
-  [ $(echo "${GITHUB_REF}" | sed -e "s/refs\/tags\/${IMAGE_NAME}\/${INPUT_VERSION}\///g") != "${GITHUB_REF}" ]
+  [ $(echo "${GITHUB_REF}" | sed -e "s/refs\/tags\///g") != "${GITHUB_REF}" ]
 }
 
 function isPullRequest() {
