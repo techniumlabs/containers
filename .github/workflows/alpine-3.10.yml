@@ -18,12 +18,24 @@ env:
   TIMEZONE: Australia/Sydney
 
 jobs:
-
-  # Push image to GitHub Packages.
-  push:
+  ci-build:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
-
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish to registry
+        uses: ./action
+        with:
+          name: alpine
+          registry: docker.pkg.github.com/techniumlabs/containers
+          username: ${{ github.actor }}
+          password: ${{ secrets. GITHUB_TOKEN }}
+          workdir: alpine/3.10
+          buildargs: IMAGE_REGISTRY,IMAGE_REPOSITORY,MAINTAINER,TIMEZONE
+          tags: 3.10-ci-build-r${{github.sha}}
+  release-build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'create' && startswith(github.ref, "refs/tags/") 
     steps:
       - uses: actions/checkout@v2
       - name: Publish to registry
