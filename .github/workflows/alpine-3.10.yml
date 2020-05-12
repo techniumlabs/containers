@@ -1,5 +1,6 @@
 name: alpine-3.10
 on:
+  create:  
   push:
     # Publish `master` as Docker `latest` image.
     branches:
