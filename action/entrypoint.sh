@@ -75,7 +75,7 @@ function translateDockerTag() {
   elif isGitTag && usesBoolean "${INPUT_TAG_SEMVER}" && isSemver "${GITHUB_REF}"; then
     TAGS=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g" | sed -E "s/v?([0-9]+)\.([0-9+])\.([0-9]+)(-[a-zA-Z]+(\.[0-9]+)?)?/\1.\2.\3\4 \1.\2\4 \1\4/g")
   elif isGitTag && usesBoolean "${INPUT_TAG_NAMES}"; then
-    TAGS=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g" | sed -e "s/${IMAGE_NAME}-//g")
+    TAGS=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\/${IMAGE_NAME}\/${INPUT_VERSION}\///g" | sed -e "s/refs\/tags\///g" | sed -e "s/${IMAGE_NAME}-${INPUT_VERSION}-//g")
   elif isGitTag; then
     TAGS="latest"
   elif isPullRequest; then

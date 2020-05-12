@@ -9,7 +9,7 @@ inputs:
     description: 'The name of the image you would like to push'
     required: true
   version:
-    description: 'Name of the version you would like to push'
+    description: 'Name of the version of image you would like to build'
     required: true
   username:
     description: 'The login username for the registry'
