@@ -35,7 +35,7 @@ jobs:
           tags: 3.10-ci-build-r${{github.sha}}
   release-build:
     runs-on: ubuntu-latest
-    if: github.event_name == 'create' && startswith(github.ref, "refs/tags/") 
+    if: github.event_name == 'create' && startswith(github.ref, 'refs/tags/') 
     steps:
       - uses: actions/checkout@v2
       - name: Publish to registry
