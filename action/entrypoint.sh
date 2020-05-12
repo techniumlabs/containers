@@ -96,7 +96,7 @@ function isOnMaster() {
 }
 
 function isGitTag() {
-  [ $(echo "${GITHUB_REF}" | sed -e "s/refs\/tags\///g") != "${GITHUB_REF}" ]
+  [ $(echo "${GITHUB_REF}" | sed -e "s/refs\/tags\/${IMAGE_NAME}\/${INPUT_VERSION}\///g") != "${GITHUB_REF}" ]
 }
 
 function isPullRequest() {
