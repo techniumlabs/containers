@@ -24,7 +24,7 @@ jobs:
       - name: Publish to registry
         uses: ./action
         with:
-          name: alpine
+          name: consul
           registry: docker.pkg.github.com/techniumlabs/containers
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
@@ -33,13 +33,13 @@ jobs:
           tags: 3.10-ci-build-r${{ github.sha }}
   release-build:
     runs-on: ubuntu-latest
-    if: github.event_name == 'create' && startswith(github.ref, 'refs/tags/alpine/3.10/')
+    if: github.event_name == 'create' && startswith(github.ref, 'refs/tags/consul/1.7/')
     steps:
       - uses: actions/checkout@v2
       - name: Publish to docker registry
         uses: ./action
         with:
-          name: techniumlabs/alpine
+          name: techniumlabs/consul
           version: '1.7'
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
