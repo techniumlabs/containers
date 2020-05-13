@@ -16,9 +16,9 @@ __check_defined = \
 
 build:: ## Build image
 	$(CONTAINER_BUILDER) build --file ${IMAGE_DIR}/Dockerfile \
-		--build-arg IMAGE_REGISTRY=docker.pkg.github.com/techniumlabs \
-		--build-arg IMAGE_REPOSITORY=containers \
-	--tag techniumlabs/${IMAGE_NAME}:${IMAGE_VERSION} ${IMAGE_DIR}
+		--build-arg IMAGE_REGISTRY=registry.hub.docker.com \
+		--build-arg IMAGE_REPOSITORY=techniumlabs \
+		--tag techniumlabs/${IMAGE_NAME}:${IMAGE_VERSION} ${IMAGE_DIR}
 
 scan:: ## Scan the image
 	@trivy --exit-code 0 --severity UNKNOWN,LOW,MEDIUM --no-progress image

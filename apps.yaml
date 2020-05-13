@@ -11,6 +11,9 @@ apps:
   - name: clair
     versions:
       - name: 2.1
+  - name: consul
+    versions:
+      - name: 1.7
   - name: harbor-sync
     versions:
       - name: 1.3
