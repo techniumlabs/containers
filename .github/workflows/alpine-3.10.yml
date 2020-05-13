@@ -10,8 +10,8 @@ on:
 
 env:
   IMAGE_VERSION: 3.10-r${{github.run_number}}
-  IMAGE_REGISTRY: techniumlabs
-  IMAGE_REPOSITORY: alpine
+  IMAGE_REGISTRY: registry.hub.docker.com
+  IMAGE_REPOSITORY: techniumlabs
   MAINTAINER: devops@techniumlabs.com
   TIMEZONE: Australia/Sydney
 

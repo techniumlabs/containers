@@ -10,8 +10,8 @@ on:
 
 env:
   IMAGE_VERSION: 1.7-r${{github.run_number}}
-  IMAGE_REGISTRY: techniumlabs
-  IMAGE_REPOSITORY: consul
+  IMAGE_REGISTRY: registry.hub.docker.com
+  IMAGE_REPOSITORY: techniumlabs
   MAINTAINER: devops@techniumlabs.com
   TIMEZONE: Australia/Sydney
 
