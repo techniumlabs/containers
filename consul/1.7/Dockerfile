@@ -15,6 +15,7 @@ RUN addgroup consul && \
 
 # Set up certificates, base tools, and Consul.
 # libc6-compat is needed to symlink the shared libraries for ARM builds
+# TODO: Add gpg check for consul.
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 # hadolint ignore=DL3003
 RUN set -eux && \
