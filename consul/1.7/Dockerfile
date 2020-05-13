@@ -19,7 +19,7 @@ RUN addgroup consul && \
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 # hadolint ignore=DL3003
 RUN set -eux && \
-  apk add --no-cache curl=7.66.0-r0 dumb-init=1.2.2-r1 gnupg=2.2.19-r0 libcap=2.27-r0 openssl=1.1.1g-r0 su-exec=0.2-r0 iputils=20180629-r1 jq= libc6-compat && \
+  apk add --no-cache curl=7.66.0-r0 dumb-init=1.2.2-r1 gnupg=2.2.19-r0 libcap=2.27-r0 openssl=1.1.1g-r0 su-exec=0.2-r0 iputils=20180629-r1 jq=1.6-r0 libc6-compat=1.1.22-r3 && \
     mkdir -p /tmp/build && \
     cd /tmp/build && \
     apkArch="$(apk --print-arch)" && \
