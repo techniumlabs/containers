@@ -10,8 +10,8 @@ ENV HASHICORP_RELEASES=https://releases.hashicorp.com
 
 # Create a consul user and group first so the IDs get set the same way, even as
 # the rest of this may change over time.
-RUN addgroup consul && \
-    adduser -S -G consul consul
+RUN addgroup -g 1000 consul && \
+    adduser -S -G consul -u 1000 consul
 
 # Set up certificates, base tools, and Consul.
 # libc6-compat is needed to symlink the shared libraries for ARM builds

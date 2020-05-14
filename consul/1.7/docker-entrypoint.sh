@@ -74,25 +74,25 @@ elif consul --help "$1" 2>&1 | grep -q "consul $1"; then
   set -- consul "$@"
 fi
 
-# If we are running Consul, make sure it executes as the proper user.
-if [ "$1" = 'consul' -a -z "${CONSUL_DISABLE_PERM_MGMT+x}" ]; then
-  # If the data or config dirs are bind mounted then chown them.
-  # Note: This checks for root ownership as that's the most common case.
-  if [ "$(stat -c %u "$CONSUL_DATA_DIR")" != "$(id -u consul)" ]; then
-    chown consul:consul "$CONSUL_DATA_DIR"
-  fi
-  if [ "$(stat -c %u "$CONSUL_CONFIG_DIR")" != "$(id -u consul)" ]; then
-    chown consul:consul "$CONSUL_CONFIG_DIR"
-  fi
+# # If we are running Consul, make sure it executes as the proper user.
+# if [ "$1" = 'consul' -a -z "${CONSUL_DISABLE_PERM_MGMT+x}" ]; then
+#   # If the data or config dirs are bind mounted then chown them.
+#   # Note: This checks for root ownership as that's the most common case.
+#   if [ "$(stat -c %u "$CONSUL_DATA_DIR")" != "$(id -u consul)" ]; then
+#     chown consul:consul "$CONSUL_DATA_DIR"
+#   fi
+#   if [ "$(stat -c %u "$CONSUL_CONFIG_DIR")" != "$(id -u consul)" ]; then
+#     chown consul:consul "$CONSUL_CONFIG_DIR"
+#   fi
 
-  # If requested, set the capability to bind to privileged ports before
-  # we drop to the non-root user. Note that this doesn't work with all
-  # storage drivers (it won't work with AUFS).
-  if [ ! -z ${CONSUL_ALLOW_PRIVILEGED_PORTS+x} ]; then
-    setcap "cap_net_bind_service=+ep" /bin/consul
-  fi
+#   # If requested, set the capability to bind to privileged ports before
+#   # we drop to the non-root user. Note that this doesn't work with all
+#   # storage drivers (it won't work with AUFS).
+#   if [ ! -z ${CONSUL_ALLOW_PRIVILEGED_PORTS+x} ]; then
+#     setcap "cap_net_bind_service=+ep" /bin/consul
+#   fi
 
-  set -- su-exec consul:consul "$@"
-fi
+#   set -- su-exec consul:consul "$@"
+# fi
 
 exec "$@"
