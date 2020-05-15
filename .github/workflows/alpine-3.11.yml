@@ -10,8 +10,8 @@ on:
 
 env:
   IMAGE_VERSION: 3.11-r${{github.run_number}}
-  IMAGE_REGISTRY: techniumlabs
-  IMAGE_REPOSITORY: alpine
+  IMAGE_REGISTRY: registry.hub.docker.com
+  IMAGE_REPOSITORY: techniumlabs
   MAINTAINER: devops@techniumlabs.com
   TIMEZONE: Australia/Sydney
 
@@ -30,10 +30,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           workdir: alpine/3.11
           buildargs: IMAGE_REGISTRY,IMAGE_REPOSITORY,MAINTAINER,TIMEZONE
-          tags: 3.10-ci-build-r${{ github.sha }}
+          tags: 3.11-ci-build-r${{ github.sha }}
   release-build:
     runs-on: ubuntu-latest
-    if: github.event_name == 'create' && startswith(github.ref, 'refs/tags/alpine/3.10/')
+    if: github.event_name == 'create' && startswith(github.ref, 'refs/tags/alpine/3.11/')
     steps:
       - uses: actions/checkout@v2
       - name: Publish to docker registry
