@@ -37,7 +37,7 @@ jobs:
           password: ${{{{ secrets.GITHUB_TOKEN }}}}
           workdir: {app["name"]}/{version["name"]}
           buildargs: IMAGE_REGISTRY,IMAGE_REPOSITORY,MAINTAINER,TIMEZONE
-          tags: 3.10-ci-build-r${{{{ github.sha }}}}
+          tags: {version["name"]}-ci-build-r${{{{ github.sha }}}}
   release-build:
     runs-on: ubuntu-latest
     if: github.event_name == 'create' && startswith(github.ref, 'refs/tags/{app["name"]}/{version["name"]}/')
