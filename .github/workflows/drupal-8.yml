@@ -1,0 +1,48 @@
+name: drupal-8
+on:
+  create:
+  push:
+    branches:
+      - master
+    paths:
+      - 'drupal/8/**'
+      - '.github/workflows/drupal-8.yml'
+
+env:
+  IMAGE_VERSION: 8-r${{github.run_number}}
+  IMAGE_REGISTRY: registry.hub.docker.com
+  IMAGE_REPOSITORY: techniumlabs
+  MAINTAINER: devops@techniumlabs.com
+  TIMEZONE: Australia/Sydney
+
+jobs:
+  ci-build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish to registry
+        uses: ./action
+        with:
+          name: drupal
+          registry: docker.pkg.github.com/techniumlabs/containers
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          workdir: drupal/8
+          buildargs: IMAGE_REGISTRY,IMAGE_REPOSITORY,MAINTAINER,TIMEZONE
+          tags: 8-ci-build-r${{ github.sha }}
+  release-build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'create' && startswith(github.ref, 'refs/tags/drupal/8/')
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish to docker registry
+        uses: ./action
+        with:
+          name: techniumlabs/drupal
+          version: '8'
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          workdir: drupal/8
+          buildargs: IMAGE_REGISTRY,IMAGE_REPOSITORY,MAINTAINER,TIMEZONE
+          tag_names: true

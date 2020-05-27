@@ -14,6 +14,11 @@ apps:
   - name: consul
     versions:
       - name: 1.7
+  - name: drupal
+    versions:
+      - name: 7
+      - name: 8
+      - name: 9
   - name: harbor-sync
     versions:
       - name: 1.3

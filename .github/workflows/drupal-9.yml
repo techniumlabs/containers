@@ -1,0 +1,48 @@
+name: drupal-9
+on:
+  create:
+  push:
+    branches:
+      - master
+    paths:
+      - 'drupal/9/**'
+      - '.github/workflows/drupal-9.yml'
+
+env:
+  IMAGE_VERSION: 9-r${{github.run_number}}
+  IMAGE_REGISTRY: registry.hub.docker.com
+  IMAGE_REPOSITORY: techniumlabs
+  MAINTAINER: devops@techniumlabs.com
+  TIMEZONE: Australia/Sydney
+
+jobs:
+  ci-build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish to registry
+        uses: ./action
+        with:
+          name: drupal
+          registry: docker.pkg.github.com/techniumlabs/containers
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          workdir: drupal/9
+          buildargs: IMAGE_REGISTRY,IMAGE_REPOSITORY,MAINTAINER,TIMEZONE
+          tags: 9-ci-build-r${{ github.sha }}
+  release-build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'create' && startswith(github.ref, 'refs/tags/drupal/9/')
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish to docker registry
+        uses: ./action
+        with:
+          name: techniumlabs/drupal
+          version: '9'
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          workdir: drupal/9
+          buildargs: IMAGE_REGISTRY,IMAGE_REPOSITORY,MAINTAINER,TIMEZONE
+          tag_names: true
