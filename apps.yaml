@@ -30,6 +30,9 @@ apps:
   - name: harbor-sync
     versions:
       - name: 1.3
+  - name: logstash
+    versions:
+      - name: 7
   - name: php-fpm
     versions:
       - name: 7.2
