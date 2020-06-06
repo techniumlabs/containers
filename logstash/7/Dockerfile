@@ -66,10 +66,10 @@ WORKDIR /usr/share/logstash
 COPY config/logstash /usr/share/logstash/config/
 COPY config/pipeline/default.conf /usr/share/logstash/pipeline/logstash.conf
 RUN chown --recursive logstash:root config/ pipeline/
+RUN /usr/share/logstash/bin/logstash-plugin install logstash-output-amazon_es
 
 USER 1000
 
 EXPOSE 9600 5044
 
 ENTRYPOINT ["cinit", "--", "logstash"]
-CMD ["-e", ""]
