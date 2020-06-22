@@ -8,6 +8,9 @@ apps:
     versions:
       - name: "3.10"
       - name: "3.11"
+  - name: apache
+    versions:
+      - name: "2.4"
   - name: awscli
     versions:
       - name: "1.18"
