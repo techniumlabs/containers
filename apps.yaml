@@ -4,6 +4,7 @@ apps:
     versions:
       - name: "3.10"
       - name: "3.11"
+      - name: "3.12"
   - name: alpine-glibc
     versions:
       - name: "3.10"
