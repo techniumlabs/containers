@@ -13,7 +13,7 @@ RUN set -ex; \
   rm -f /tmp/traefik.tar.gz; \
   chmod +x /usr/local/bin/traefik;
 
-USER traefik
+USER 1000
 
 EXPOSE 8080
 ENTRYPOINT ["traefik"]
