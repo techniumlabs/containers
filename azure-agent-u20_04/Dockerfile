@@ -3,9 +3,8 @@ FROM ubuntu:20.04
 # To make it easier for build and release pipelines to run apt-get,
 # configure apt to not require confirmation (assume the -y argument by default)
 ENV DEBIAN_FRONTEND=noninteractive
-RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes && \
+  apt-get update && apt-get install -y --no-install-recommends \
   ca-certificates \
   curl \
   jq \
@@ -20,16 +19,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   apt-utils \
   && rm -rf /var/lib/apt/lists/*
 
-RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-
-RUN  dpkg -i packages-microsoft-prod.deb
-
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
+  dpkg -i packages-microsoft-prod.deb && \
+  apt-get update && apt-get install -y --no-install-recommends \
   dotnet-sdk-5.0 \
-  && rm -rf /var/lib/apt/lists/*
-
-RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
+  && rm -rf /var/lib/apt/lists/* && \
+  curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
   && rm -rf /var/lib/apt/lists/*
 
 ARG TARGETARCH=amd64
