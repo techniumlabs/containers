@@ -2,11 +2,11 @@
 FROM alpine:3.10.4
 
 ARG MAINTAINER
-ARG TIMEZONE=US
+ARG TIMEZONE=us
 
 LABEL maintainer=${MAINTAINER}
 
-# RUN echo ${TIMEZONE}
+RUN echo "${TIMEZONE}"
 
 RUN apk --no-cache add tzdata=2020a-r0 \
   openssl=1.1.1g-r0 \
