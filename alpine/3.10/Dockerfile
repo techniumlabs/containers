@@ -8,9 +8,9 @@ LABEL maintainer=${MAINTAINER}
 
 RUN echo "${TIMEZONE}"
 
-RUN apk --no-cache add tzdata=2020a-r0 \
-  openssl=1.1.1g-r0 \
-  openssl-dev=1.1.1g-r0 \
+# RUN apk --no-cache add tzdata=2020a-r0 \
+#   openssl=1.1.1g-r0 \
+#   openssl-dev=1.1.1g-r0 \
 #   ca-certificates=20191127-r0 \
 #   && cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime \
 #   && echo "${TIMEZONE}" > /etc/timezone \
@@ -19,7 +19,7 @@ RUN apk --no-cache add tzdata=2020a-r0 \
 #   && tar -xzvf /tmp/cinit.tar.gz -C /tmp \
 #   && mv /tmp/cinit /usr/local/bin/cinit \
 #   && chmod +x /usr/local/bin/cinit \
-  && rm -Rf /tmp/*
+#   && rm -Rf /tmp/*
 
 ENV TERM="xterm" \
   LANG="C.UTF-8" \
