@@ -12,9 +12,9 @@ RUN apk --no-cache add tzdata=2020a-r0 \
   openssl=1.1.1g-r0 \
   openssl-dev=1.1.1g-r0 \
   ca-certificates=20191127-r0 \
-  && cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime \
-  && echo "${TIMEZONE}" > /etc/timezone \
-  && apk del tzdata \
+#   && cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime \
+#   && echo "${TIMEZONE}" > /etc/timezone \
+#   && apk del tzdata \
 #   && wget -O /tmp/cinit.tar.gz https://github.com/techniumlabs/cinit/releases/download/v0.0.1/cinit_0.0.1_linux_x86_64.tar.gz \
 #   && tar -xzvf /tmp/cinit.tar.gz -C /tmp \
 #   && mv /tmp/cinit /usr/local/bin/cinit \
