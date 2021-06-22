@@ -1,5 +1,5 @@
 #FROM alpine:3.10.4
-FROM alpine:3.10.4
+FROM alpine:3.13
 
 ARG MAINTAINER
 ARG TIMEZONE=us
