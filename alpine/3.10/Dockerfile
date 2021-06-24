@@ -8,7 +8,8 @@ LABEL maintainer=${MAINTAINER}
 
 RUN echo "${TIMEZONE}"
 
-RUN apk --no-cache add tzdata \
+RUN apk --no-cache add \
+#   tzdata \
   openssl \
   openssl-dev \
   ca-certificates \
