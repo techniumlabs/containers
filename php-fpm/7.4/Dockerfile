@@ -84,7 +84,7 @@ RUN set -eux; \
 #     rm -rf "$GNUPGHOME"; \
 #   fi; \
 #   \
-#   apk del --no-network .fetch-deps
+  apk del --no-network .fetch-deps
 
 
 # hadolint ignore=SC2046,SC2086,DL3003,DL3018
