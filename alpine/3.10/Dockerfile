@@ -14,6 +14,7 @@ RUN apk --no-cache add \
   openssl \
   openssl-dev \
   ca-certificates \
+  && ls -d /usr/share/zoneinfo/
   && cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime \
   && echo "${TIMEZONE}" > /etc/timezone \
   && apk del tzdata \
