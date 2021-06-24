@@ -91,15 +91,15 @@ RUN set -eux; \
 RUN set -eux; \
   apk add --no-cache --virtual .build-deps \
   ${PHPIZE_DEPS} \
-  argon2-dev=20171227-r2 \
-  coreutils=8.31-r0 \
-  curl-dev=7.66.0-r0 \
-  libedit-dev=20190324.3.1-r0 \
-  libsodium-dev=1.0.18-r0 \
-  libxml2-dev=2.9.9-r3 \
-  linux-headers=4.19.36-r0 \
-  oniguruma-dev=6.9.4-r0 \
-  sqlite-dev=3.28.0-r2 \
+  argon2-dev \
+  coreutils \
+  curl-dev \
+  libedit-dev \
+  libsodium-dev \
+  libxml2-dev \
+  linux-headers \
+  oniguruma-dev \
+  sqlite-dev \
   ; \
   \
   export CFLAGS="$PHP_CFLAGS" \
