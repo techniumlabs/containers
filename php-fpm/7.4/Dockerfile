@@ -55,7 +55,7 @@ RUN set -eux; \
   chgrp -R 0 /env; \
   chmod -Rf u=g /env
 
-SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+# SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 # hadolint ignore=DL3003
 # RUN set -eux; \
 #   apk add --no-cache --virtual .fetch-deps gnupg=2.2.19-r0; \
