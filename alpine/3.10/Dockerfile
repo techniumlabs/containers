@@ -8,13 +8,14 @@ LABEL maintainer=${MAINTAINER}
 
 RUN echo "${TIMEZONE}"
 
-RUN apk add tzdata
-
 RUN apk --no-cache add \
+  tzdata \
   openssl \
   openssl-dev \
   ca-certificates \
-  && ls -d /usr/share/zoneinfo/
+  && cd /usr/share/zoneinfo/ \
+  && ls \
+  && cd \
   && cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime \
   && echo "${TIMEZONE}" > /etc/timezone \
   && apk del tzdata \
