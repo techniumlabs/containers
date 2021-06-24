@@ -77,7 +77,8 @@ RUN set -eux; \
     GNUPGHOME="$(mktemp -d)"; \
     export GNUPGHOME; \
     for key in $GPG_KEYS; do \
-      gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
+      echo "$key";
+#       gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
     done; \
     gpg --batch --verify php.tar.xz.asc php.tar.xz; \
     gpgconf --kill all; \
