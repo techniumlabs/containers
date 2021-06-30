@@ -33,8 +33,9 @@ def generateTrivyReport():
             result = readReport()
             result = result[0]
             if(len(result['Vulnerabilities'])):
-                parse_for_base_images(docker["docker_file_path"],docker["base_img_repo_name"])
-                git_push()
+             parse_for_base_images(docker["docker_file_path"],docker["base_img_repo_name"])
+        if len(changed_file):
+            git_push()
         changed_file = []
         os.popen('cd {}'.format(home_path)).read()
             
