@@ -1,6 +1,6 @@
 ARG  IMAGE_REGISTRY
 ARG  IMAGE_REPOSITORY
-FROM ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}/base:3.10-alpine-r17
+FROM ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}/base:3.12-alpine-r1
 
 # dependencies required for running "phpize"
 # these get automatically installed and removed by "docker-php-ext-*" (unless they're already installed)
@@ -227,3 +227,4 @@ EXPOSE 9000
 USER www-data
 
 CMD ["/bin/sh", "-c", "source /env/variables; php-fpm"]
+# last_updated_date=2021-06-30 03:54:18.901721
