@@ -1,0 +1,4 @@
+- repository_name : "alpine/php"
+  base_img_repo_name : "alpine/base"
+  docker_file_path : 'php-fpm/7.4/Dockerfile'
+
