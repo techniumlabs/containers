@@ -14,23 +14,29 @@ from azure.identity import DefaultAzureCredential
 registory = os.environ['REGISTORY'] #"techniumrca.azurecr.io"
 account_url = "https://" + registory
 client = ContainerRegistryClient(account_url, DefaultAzureCredential())
-repo = Repo(search_parent_directories=True)
 changed_file = []
+home_path =  os.popen("pwd").read()
 
 def generateTrivyReport():
-    images = readYAMLFile()
-    for img in images:
+    repos = readYAMLFile()
+    for repo in repos:
         print("-----------start-----------")
-        latest_image_tag = get_image_tag(img['repository_name']).name
-        image_name = "{}/{}:{}".format(registory,img['repository_name'],latest_image_tag)#latest image
-        os.popen("docker pull {}".format(image_name)).read()
-        print(image_name)
-        os.popen('trivy  image -f json -o ./result.json --severity HIGH,CRITICAL {}'.format(image_name)).read()
-        result = readReport()
-        result = result[0]
-        if(len(result['Vulnerabilities'])):
-           parse_for_base_images(img["docker_file_path"],img["base_img_repo_name"])
-    git_push()
+        if len(repo['git_url']):
+            navigate_to_git_path(repo['git_url'])
+        os.popen("git checkout {}".format(repo['branch'])).read()
+        for docker in repo['docker_details']:
+            latest_image_tag = get_image_tag(docker['repository_name']).name
+            image_name = "{}/{}:{}".format(registory,docker['repository_name'],latest_image_tag)#latest image
+            os.popen("docker pull {}".format(image_name)).read()
+            print(image_name)
+            os.popen('trivy  image -f json -o ./result.json --severity HIGH,CRITICAL {}'.format(image_name)).read()
+            result = readReport()
+            result = result[0]
+            if(len(result['Vulnerabilities'])):
+             parse_for_base_images(docker["docker_file_path"],docker["base_img_repo_name"])
+        git_push()
+        changed_file = []
+        os.popen('cd {}'.format(home_path)).read()
             
 
 def readYAMLFile():
@@ -91,6 +97,7 @@ def parse_for_base_images(file_path,base_img_repo_name):
 def git_push():
     print("--------git-------")
     try:
+        repo = Repo(search_parent_directories=True)
         repo.index.add(changed_file)
         repo.index.commit("Azure pipeline Update Dockerfile")
         origin = repo.remote(name="origin")
@@ -98,6 +105,11 @@ def git_push():
         print('*******Done**********')
     except Exception as e:
         print(e)    
-
+def navigate_to_git_path(git_url):
+    folder_name = git_url.split('/')[-1].split('.')[0]
+    os.popen("cd ..").read()
+    os.popen("git clone {}".format(git_url)).read()
+    print('Folder-------->',folder_name)
+    os.popen("cd {}".format(folder_name)).read()
 
 generateTrivyReport()
