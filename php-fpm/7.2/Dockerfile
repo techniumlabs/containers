@@ -1,6 +1,6 @@
 ARG  IMAGE_REGISTRY
 ARG  IMAGE_REPOSITORY
-FROM ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}/base:3.10-alpine-r17
+FROM ${IMAGE_REGISTRY}/${IMAGE_REPOSITORY}/base:3.10-alpine-r1
 
 # dependencies required for running "phpize"
 # these get automatically installed and removed by "docker-php-ext-*" (unless they're already installed)
@@ -39,9 +39,9 @@ COPY docker-php-* /usr/local/bin/
 
 # persistent / runtime deps
 RUN apk add --no-cache \
-  curl=7.66.0-r0 \
-  tar=1.32-r0 \
-  xz=5.2.4-r0
+  curl \
+  tar \
+  xz
 
 # ensure www-data user exists
 RUN set -eux; \
@@ -58,7 +58,7 @@ RUN set -eux; \
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 # hadolint ignore=DL3003
 RUN set -eux; \
-  apk add --no-cache --virtual .fetch-deps gnupg=2.2.19-r0; \
+  apk add --no-cache --virtual .fetch-deps gnupg; \
   \
   mkdir -p /usr/src; \
   cd /usr/src; \
