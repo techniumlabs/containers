@@ -1,14 +1,14 @@
-FROM alpine:3.12
-#FROM alpine@sha256:a15790640a6690aa1730c38cf0a440e2aa44aaca9b0e8931a9f2b0d7cc90fd65
+#FROM alpine:3.12
+FROM alpine@sha256:a15790640a6690aa1730c38cf0a440e2aa44aaca9b0e8931a9f2b0d7cc90fd65
 
 ARG MAINTAINER
 ARG TIMEZONE
 
 LABEL maintainer=${MAINTAINER}
 
-RUN apk --no-cache add tzdata \
-  openssl \
-  openssl-dev \
+RUN apk --no-cache add tzdata=2020a-r0 \
+  openssl=1.1.1g-r0 \
+  openssl-dev=1.1.1g-r0 \
   ca-certificates=20191127-r4 \
   && cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime \
   && echo "${TIMEZONE}" > /etc/timezone \
