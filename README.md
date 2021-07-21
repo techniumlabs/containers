@@ -63,3 +63,29 @@ version 2.1: ![clair-2.1](https://github.com/techniumlabs/containers/workflows/c
 ## Utilties
 ### Harbor Sync
 version 1.3: ![harbor-sync-1.3](https://github.com/techniumlabs/containers/workflows/harbor-sync-1.3/badge.svg)
+
+## Base image validation dependencies 
+sudo apt-get install wget apt-transport-https gnupg lsb-release
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+sudo apt-get update
+sudo apt-get install trivy
+
+## Child image validation and update dependencies
+sudo apt-get install wget apt-transport-https gnupg lsb-release
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+sudo apt-get update
+sudo apt-get install trivy
+
+git config --global user.email "xyz@mail.com"
+git config --global user.name "xyz"
+
+
+git checkout versioning 
+
+pip install --pre azure-containerregistry
+
+pip install --pre azure-identity
+
+pip install gitpython
