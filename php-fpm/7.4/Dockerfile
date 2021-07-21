@@ -227,4 +227,4 @@ EXPOSE 9000
 USER www-data
 
 CMD ["/bin/sh", "-c", "source /env/variables; php-fpm"]
-# last_updated_date=2021-07-20 06:19:01.175836
+# last_updated_date=2021-07-21 02:42:21.196324
