@@ -1,0 +1,92 @@
+== Containers
+
+....
+This repository contains dockerfiles for docker containers that is widely used.
+....
+
+=== Why ?
+
+....
+The images built are with the following in mind.
+
+1. Deterministic builds
+2. Tested Builds
+3. Continuous Patching
+4. Linted
+5. Support for injecting secrets via secret manager
+   1. Vault
+   2. AWS Secret Manager
+   3. AWS Parameter Store
+   4. [TODO] Azure keyvault
+6. Template Substitution in config file
+....
+
+=== Base Images
+
+==== Alpine
+
+version 3.10:
+image:https://github.com/techniumlabs/containers/workflows/alpine-3.10/badge.svg[alpine-3.10]
+
+version 3.11:
+image:https://github.com/techniumlabs/containers/workflows/alpine-3.11/badge.svg[alpine-3.11]
+
+==== Alpine Glibc
+
+version 3.10:
+image:https://github.com/techniumlabs/containers/workflows/alpine-glibc-3.10/badge.svg[alpine-glibc-3.10]
+
+=== PHP
+
+==== PHP-FPM
+
+version 7.2:
+image:https://github.com/techniumlabs/containers/workflows/php-fpm-7.2/badge.svg[php-fpm-7.2]
+
+version 7.3:
+image:https://github.com/techniumlabs/containers/workflows/php-fpm-7.3/badge.svg[php-fpm-7.3]
+
+version 7.4:
+image:https://github.com/techniumlabs/containers/workflows/php-fpm-7.4/badge.svg[php-fpm-7.4]
+
+=== Reverse Proxies
+
+==== Traefik
+
+version 2.0:
+image:https://github.com/techniumlabs/containers/workflows/traefik-2.0/badge.svg[traefik-2.0]
+
+version 2.1:
+image:https://github.com/techniumlabs/containers/workflows/traefik-2.1/badge.svg[traefik-2.1]
+
+version 2.2:
+image:https://github.com/techniumlabs/containers/workflows/traefik-2.2/badge.svg[traefik-2.2]
+
+=== Monitoring and Logging
+
+==== Thanos
+
+version 0.10:
+image:https://github.com/techniumlabs/containers/workflows/thanos-0.10/badge.svg[thanos-0.10]
+
+version 0.11:
+image:https://github.com/techniumlabs/containers/workflows/thanos-0.11/badge.svg[thanos-0.11]
+
+==== Loki
+
+version 1.3:
+image:https://github.com/techniumlabs/containers/workflows/loki-1.3/badge.svg[loki-1.3]
+
+=== Security
+
+==== Clair
+
+version 2.1:
+image:https://github.com/techniumlabs/containers/workflows/clair-2.1/badge.svg[clair-2.1]
+
+=== Utilties
+
+==== Harbor Sync
+
+version 1.3:
+image:https://github.com/techniumlabs/containers/workflows/harbor-sync-1.3/badge.svg[harbor-sync-1.3]
